@@ -1,0 +1,4 @@
+TRC_DB_URL=jdbc:postgresql://localhost:5432/terracota_user_db
+TRC_DB_USERNAME=docker
+TRC_DB_PASSWORD=docker
+TRC_DB_DRIVER_CLASS_NAME=org.postgresql.Driver
