@@ -12,5 +12,7 @@ public interface CustomerGateway {
 
     Optional<Customer> findById(String id);
 
+    Optional<Customer> findByDocumentValue(String value);
+
     void deleteById(String id);
 }

@@ -33,6 +33,12 @@ public class CustomerPostgresAdapter implements CustomerGateway {
     }
 
     @Override
+    public Optional<Customer> findByDocumentValue(String value) {
+        return this.repository.findByDocumentValue(value)
+                .map(CustomerEntity::toDomain);
+    }
+
+    @Override
     public void deleteById(final String id) {
         if (this.repository.existsById(id)) {
             this.repository.deleteById(id);

@@ -1,7 +1,7 @@
 package br.com.terracota.infra.api;
 
-import br.com.terracota.infra.dto.request.CreateCustomerRequest;
-import br.com.terracota.infra.dto.response.CreateCustomerResponse;
+import br.com.terracota.infra.api.dto.request.CreateCustomerRequest;
+import br.com.terracota.infra.api.dto.response.CreateCustomerResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

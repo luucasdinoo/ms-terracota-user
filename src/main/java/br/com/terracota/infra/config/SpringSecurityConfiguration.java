@@ -6,6 +6,7 @@ import br.com.terracota.infra.security.user.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
@@ -19,6 +20,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.RequestMatcher;
+
+import java.util.List;
 
 @Configuration
 @RequiredArgsConstructor
@@ -27,6 +31,12 @@ public class SpringSecurityConfiguration {
 
     private final CustomUserDetailsService customUserDetailsService;
     private final JwtUtils jwtUtils;
+
+    private static final String[] PUBLIC_URLS = {
+            "/api/v1/auth/login",
+            "/api/v1/customers",
+            "/api/v1/craftsmen"
+    };
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http){
@@ -37,7 +47,7 @@ public class SpringSecurityConfiguration {
                 //.formLogin(configurer -> configurer.loginPage("/api/v1/auth/login"))
                 .httpBasic(Customizer.withDefaults())
                 .authorizeHttpRequests(authorize -> {
-                    //authorize.requestMatchers("/api/v1/).permitAll();
+                    authorize.requestMatchers(HttpMethod.POST,PUBLIC_URLS).permitAll();
                     authorize.anyRequest().authenticated();
                 })
                 .authenticationProvider(this.daoAuthenticationProvider())

@@ -6,7 +6,7 @@ import br.com.terracota.application.dto.input.DocumentInput;
 import br.com.terracota.application.dto.input.UserInput;
 import br.com.terracota.application.dto.output.CreateCraftsmanOutput;
 import br.com.terracota.domain.enums.DocumentType;
-import br.com.terracota.domain.exception.UserAlreadyExists;
+import br.com.terracota.domain.exception.AlreadyExistsException;
 import br.com.terracota.domain.gateway.CraftsmanGateway;
 import br.com.terracota.domain.gateway.RoleGateway;
 import br.com.terracota.domain.gateway.UserGateway;
@@ -15,6 +15,7 @@ import br.com.terracota.domain.model.Document;
 import br.com.terracota.domain.model.Role;
 import br.com.terracota.domain.model.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ public class CreateCraftsmanUseCase extends UseCase<CreateCraftsmanInput, Create
     private final CraftsmanGateway craftsmanGateway;
     private final UserGateway userGateway;
     private final RoleGateway roleGateway;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public CreateCraftsmanOutput execute(final CreateCraftsmanInput input) {
@@ -39,7 +41,7 @@ public class CreateCraftsmanUseCase extends UseCase<CreateCraftsmanInput, Create
 
         var user = User.create(
                 userInput.username(),
-                userInput.password(),
+                this.passwordEncoder.encode(userInput.password()),
                 userInput.name(),
                 userInput.email(),
                 userInput.phone(),
@@ -59,7 +61,7 @@ public class CreateCraftsmanUseCase extends UseCase<CreateCraftsmanInput, Create
         Optional<User> byUsername = this.userGateway.findByUsername(input.username());
 
         if (byEmail.isPresent() || byUsername.isPresent()){
-            throw new UserAlreadyExists();
+            throw new AlreadyExistsException();
         }
     }
 }

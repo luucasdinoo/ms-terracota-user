@@ -6,13 +6,16 @@ import br.com.terracota.application.dto.input.UserInput;
 import br.com.terracota.application.dto.output.CreateCustomerOutput;
 import br.com.terracota.application.usecase.CreateCustomerUseCase;
 import br.com.terracota.infra.api.CustomerAPI;
-import br.com.terracota.infra.dto.request.CreateCustomerRequest;
-import br.com.terracota.infra.dto.request.DocumentRequest;
-import br.com.terracota.infra.dto.request.UserRequest;
-import br.com.terracota.infra.dto.response.CreateCustomerResponse;
+import br.com.terracota.infra.api.dto.request.CreateCustomerRequest;
+import br.com.terracota.infra.api.dto.request.DocumentRequest;
+import br.com.terracota.infra.api.dto.request.UserRequest;
+import br.com.terracota.infra.api.dto.response.CreateCraftsmanResponse;
+import br.com.terracota.infra.api.dto.response.CreateCustomerResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.net.URI;
 
 @RestController
 @RequiredArgsConstructor
@@ -38,6 +41,7 @@ public class CustomerController implements CustomerAPI {
         );
 
         CreateCustomerOutput output = this.createCustomerUseCase.execute(createCustomerInput);
-        return ResponseEntity.ok(new CreateCustomerResponse(output.id()));
+        return ResponseEntity.created(URI.create("api/v1/customers/" + output.id()))
+                .body(new CreateCustomerResponse(output.id()));
     }
 }

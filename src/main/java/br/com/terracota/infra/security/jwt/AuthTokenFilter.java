@@ -1,7 +1,6 @@
 package br.com.terracota.infra.security.jwt;
 
 import br.com.terracota.infra.security.user.CustomUserDetailsService;
-import ch.qos.logback.core.util.StringUtil;
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -36,6 +35,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
                 var auth = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(auth);
             }
+            filterChain.doFilter(request, response);
         }catch (JwtException e){
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.getWriter().write(e.getMessage() +" : Invalid or expired token, you may login and try again!");
@@ -51,5 +51,13 @@ public class AuthTokenFilter extends OncePerRequestFilter {
             return authHeader.substring(7);
         }
         return null;
+    }
+
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        return (request.getServletPath().equals("/api/v1/customers") && request.getMethod().equals("POST")) ||
+                 (request.getServletPath().equals("/api/v1/craftsmen") && request.getMethod().equals("POST")) ||
+                    (request.getServletPath().equals("/api/v1/auth/login")
+        );
     }
 }
