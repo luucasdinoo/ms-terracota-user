@@ -7,7 +7,6 @@ import br.com.terracota.application.dto.input.UserInput;
 import br.com.terracota.application.dto.output.CreateCustomerOutput;
 import br.com.terracota.domain.enums.DocumentType;
 import br.com.terracota.domain.exception.AlreadyExistsException;
-import br.com.terracota.domain.exception.EntityNotFoundException;
 import br.com.terracota.domain.gateway.CustomerGateway;
 import br.com.terracota.domain.gateway.RoleGateway;
 import br.com.terracota.domain.gateway.UserGateway;
@@ -16,6 +15,7 @@ import br.com.terracota.domain.model.Document;
 import br.com.terracota.domain.model.Role;
 import br.com.terracota.domain.model.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -29,6 +29,7 @@ public class CreateCustomerUseCase extends UseCase<CreateCustomerInput, CreateCu
     private final CustomerGateway customerGateway;
     private final UserGateway userGateway;
     private final RoleGateway roleGateway;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public CreateCustomerOutput execute(final CreateCustomerInput input) {
@@ -40,7 +41,7 @@ public class CreateCustomerUseCase extends UseCase<CreateCustomerInput, CreateCu
 
         var user = User.create(
                 userInput.username(),
-                userInput.password(),
+                this.passwordEncoder.encode(userInput.password()),
                 userInput.name(),
                 userInput.email(),
                 userInput.phone(),

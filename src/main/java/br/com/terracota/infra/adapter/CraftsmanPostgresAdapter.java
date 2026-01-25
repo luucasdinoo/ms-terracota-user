@@ -29,7 +29,12 @@ public class CraftsmanPostgresAdapter implements CraftsmanGateway {
     public Optional<Craftsman> findById(final String id) {
         return this.repository.findById(id)
                 .map(CraftsmanEntity::toDomain);
+    }
 
+    @Override
+    public Optional<Craftsman> findByDocumentValue(final String value) {
+        return this.repository.findByDocumentValue(value)
+                .map(CraftsmanEntity::toDomain);
     }
 
     @Override

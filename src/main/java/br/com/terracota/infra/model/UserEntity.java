@@ -84,6 +84,21 @@ public class UserEntity {
                         .collect(Collectors.toSet())
         );
     }
+
+    public User toDomainWithoutAddress(){
+        return User.with(
+                getId(),
+                getUsername(),
+                getPassword(),
+                getName(),
+                getEmail(),
+                getPhone(),
+                getActive(),
+                getRoles().stream()
+                        .map(RoleEntity::toDomain)
+                        .collect(Collectors.toSet())
+        );
+    }
 }
 
 

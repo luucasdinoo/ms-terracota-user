@@ -51,7 +51,7 @@ public class CustomerEntity {
     public Customer toDomain(){
         return Customer.with(
                 getId(),
-                getUser().toDomain(),
+                getUser().toDomainWithoutAddress(),
                 getDocument().toDomain(),
                 getDateOfBirth(),
                 getCreatedAt(),

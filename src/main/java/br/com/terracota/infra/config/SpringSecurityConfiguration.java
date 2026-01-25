@@ -20,9 +20,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.util.matcher.RequestMatcher;
 
-import java.util.List;
+import static br.com.terracota.infra.util.UrlUtils.PUBLIC_URLS_GET;
+import static br.com.terracota.infra.util.UrlUtils.PUBLIC_URLS_POST;
 
 @Configuration
 @RequiredArgsConstructor
@@ -31,12 +31,6 @@ public class SpringSecurityConfiguration {
 
     private final CustomUserDetailsService customUserDetailsService;
     private final JwtUtils jwtUtils;
-
-    private static final String[] PUBLIC_URLS = {
-            "/api/v1/auth/login",
-            "/api/v1/customers",
-            "/api/v1/craftsmen"
-    };
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http){
@@ -47,7 +41,8 @@ public class SpringSecurityConfiguration {
                 //.formLogin(configurer -> configurer.loginPage("/api/v1/auth/login"))
                 .httpBasic(Customizer.withDefaults())
                 .authorizeHttpRequests(authorize -> {
-                    authorize.requestMatchers(HttpMethod.POST,PUBLIC_URLS).permitAll();
+                    authorize.requestMatchers(HttpMethod.POST, PUBLIC_URLS_POST).permitAll();
+                    authorize.requestMatchers(HttpMethod.GET,PUBLIC_URLS_GET).permitAll();
                     authorize.anyRequest().authenticated();
                 })
                 .authenticationProvider(this.daoAuthenticationProvider())

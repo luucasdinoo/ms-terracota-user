@@ -2,6 +2,7 @@ package br.com.terracota.application.usecase;
 
 import br.com.terracota.application.UseCase;
 import br.com.terracota.application.dto.input.AuthLoginInput;
+import br.com.terracota.application.dto.output.AuthLoginOutput;
 import br.com.terracota.infra.security.jwt.JwtUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
