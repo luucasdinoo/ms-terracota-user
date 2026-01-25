@@ -3,3 +3,14 @@ spring:
     show-sql: false
     hibernate:
       ddl-auto: none
+
+trc:
+  db:
+    url: ${TRC_DB_URL}
+    username: ${TRC_DB_USERNAME}
+    password: ${TRC_DB_PASSWORD}
+    driver-class-name: ${TRC_DB_DRIVER_CLASS_NAME}
+  auth:
+    jwt:
+      secret: ${TRC_JWT_SECRET}
+      expiration-time: ${TRC_JWT_EXPIRATION_TIME}

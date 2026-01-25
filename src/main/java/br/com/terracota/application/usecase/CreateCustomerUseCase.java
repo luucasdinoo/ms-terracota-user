@@ -6,6 +6,7 @@ import br.com.terracota.application.dto.input.DocumentInput;
 import br.com.terracota.application.dto.input.UserInput;
 import br.com.terracota.application.dto.output.CreateCustomerOutput;
 import br.com.terracota.domain.enums.DocumentType;
+import br.com.terracota.domain.exception.AlreadyExistsException;
 import br.com.terracota.domain.exception.EntityNotFoundException;
 import br.com.terracota.domain.gateway.CustomerGateway;
 import br.com.terracota.domain.gateway.RoleGateway;
@@ -35,7 +36,7 @@ public class CreateCustomerUseCase extends UseCase<CreateCustomerInput, CreateCu
         DocumentInput documentInput = input.document();
         Optional<Role> role = this.roleGateway.findByDescription("CUSTOMER");
 
-        validateUserInput(userInput);
+        validateUserInput(userInput, documentInput);
 
         var user = User.create(
                 userInput.username(),
@@ -54,12 +55,13 @@ public class CreateCustomerUseCase extends UseCase<CreateCustomerInput, CreateCu
         return new CreateCustomerOutput(customer.getId());
     }
 
-    private void validateUserInput(final UserInput input){
-        Optional<User> byEmail = this.userGateway.findByEmail(input.email());
-        Optional<User> byUsername = this.userGateway.findByUsername(input.username());
+    private void validateUserInput(final UserInput userInput, final DocumentInput documentInput) {
+        Optional<User> byEmail = this.userGateway.findByEmail(userInput.email());
+        Optional<User> byUsername = this.userGateway.findByUsername(userInput.username());
+        Optional<Customer> byDocument = this.customerGateway.findByDocumentValue(documentInput.value());
 
-        if (byEmail.isPresent() || byUsername.isPresent()){
-            throw new EntityNotFoundException();
+        if (byEmail.isPresent() || byUsername.isPresent() || byDocument.isPresent()) {
+            throw new AlreadyExistsException();
         }
     }
 }

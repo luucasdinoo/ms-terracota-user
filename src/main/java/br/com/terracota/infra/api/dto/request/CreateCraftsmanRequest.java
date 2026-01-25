@@ -1,4 +1,4 @@
-package br.com.terracota.infra.dto.request;
+package br.com.terracota.infra.api.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotNull;

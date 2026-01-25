@@ -6,13 +6,15 @@ import br.com.terracota.application.dto.input.UserInput;
 import br.com.terracota.application.dto.output.CreateCraftsmanOutput;
 import br.com.terracota.application.usecase.CreateCraftsmanUseCase;
 import br.com.terracota.infra.api.CraftsmanAPI;
-import br.com.terracota.infra.dto.request.CreateCraftsmanRequest;
-import br.com.terracota.infra.dto.request.DocumentRequest;
-import br.com.terracota.infra.dto.request.UserRequest;
-import br.com.terracota.infra.dto.response.CreateCraftsmanResponse;
+import br.com.terracota.infra.api.dto.request.CreateCraftsmanRequest;
+import br.com.terracota.infra.api.dto.request.DocumentRequest;
+import br.com.terracota.infra.api.dto.request.UserRequest;
+import br.com.terracota.infra.api.dto.response.CreateCraftsmanResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.net.URI;
 
 @RestController
 @RequiredArgsConstructor
@@ -38,6 +40,7 @@ public class CraftsmanController implements CraftsmanAPI {
         );
 
         CreateCraftsmanOutput output = this.createCraftsmanUseCase.execute(createCraftsmanInput);
-        return ResponseEntity.ok(new CreateCraftsmanResponse(output.id()));
+        return ResponseEntity.created(URI.create("api/v1/craftsmen/" + output.id()))
+                .body(new CreateCraftsmanResponse(output.id()));
     }
 }

@@ -10,16 +10,16 @@ import javax.sql.DataSource;
 @Configuration
 public class DatabaseConfiguration {
 
-    @Value("${TRC_DB_URL:jdbc}")
+    @Value("${trc.db.url}")
     private String dbUrl;
 
-    @Value("${TRC_DB_USERNAME}")
+    @Value("${trc.db.username}")
     private String dbUsername;
 
-    @Value("${TRC_DB_PASSWORD}")
+    @Value("${trc.db.password}")
     private String dbPassword;
 
-    @Value("${TRC_DB_DRIVER_CLASS_NAME}")
+    @Value("${trc.db.driver-class-name}")
     private String dbDriverClassName;
 
     @Bean
