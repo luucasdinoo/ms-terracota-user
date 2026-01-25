@@ -11,6 +11,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -21,12 +22,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import static br.com.terracota.infra.util.UrlUtils.PUBLIC_URLS_GET;
-import static br.com.terracota.infra.util.UrlUtils.PUBLIC_URLS_POST;
+import static br.com.terracota.infra.util.UrlUtils.*;
 
 @Configuration
 @RequiredArgsConstructor
 @EnableWebSecurity
+@EnableMethodSecurity
 public class SpringSecurityConfiguration {
 
     private final CustomUserDetailsService customUserDetailsService;
@@ -43,6 +44,7 @@ public class SpringSecurityConfiguration {
                 .authorizeHttpRequests(authorize -> {
                     authorize.requestMatchers(HttpMethod.POST, PUBLIC_URLS_POST).permitAll();
                     authorize.requestMatchers(HttpMethod.GET,PUBLIC_URLS_GET).permitAll();
+                    authorize.requestMatchers(SWAGGER_WHITELIST).permitAll();
                     authorize.anyRequest().authenticated();
                 })
                 .authenticationProvider(this.daoAuthenticationProvider())

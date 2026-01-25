@@ -10,6 +10,13 @@ public final class UrlUtils {
 
     public static final String[] PUBLIC_URLS_GET = {
             "/api/v1/craftsmen/{id}",
-            "/api/v1/customers/{id}"
+            "/api/v1/customers/{id}",
+            "/api/v1/users/{id}"
+    };
+
+    public static final String[] SWAGGER_WHITELIST = {
+            "/v3/api-docs/**",
+            "/swagger-ui.html",
+            "/swagger-ui/**"
     };
 }
