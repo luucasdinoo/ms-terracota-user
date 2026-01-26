@@ -12,5 +12,7 @@ public interface CraftsmanGateway {
 
     Optional<Craftsman> findById(String id);
 
+    Optional<Craftsman> findByDocumentValue(String value);
+
     void deleteById(String id);
 }

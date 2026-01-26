@@ -51,7 +51,7 @@ public class CraftsmanEntity {
     public Craftsman toDomain(){
         return Craftsman.with(
                 getId(),
-                getUser().toDomain(),
+                getUser().toDomainWithoutAddress(),
                 getDocument().toDomain(),
                 getDateOfBirth(),
                 getCreatedAt(),

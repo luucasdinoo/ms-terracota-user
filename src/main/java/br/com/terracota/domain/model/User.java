@@ -58,6 +58,19 @@ public class User {
         return new User(id, username, password, name, email, phone, active, addresses, roles);
     }
 
+    public static User with(
+            final String id,
+            final String username,
+            final String password,
+            final String name,
+            final String email,
+            final String phone,
+            final Boolean active,
+            final Set<Role> roles
+    ) {
+        return new User(id, username, password, name, email, phone, active, null, roles);
+    }
+
     public static User with(final User user) {
         return new User(
                 user.getId(),

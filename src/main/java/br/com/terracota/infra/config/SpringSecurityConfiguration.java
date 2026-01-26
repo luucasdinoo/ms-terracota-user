@@ -11,6 +11,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -22,21 +23,16 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
-import java.util.List;
+import static br.com.terracota.infra.util.UrlUtils.*;
 
 @Configuration
 @RequiredArgsConstructor
 @EnableWebSecurity
+@EnableMethodSecurity
 public class SpringSecurityConfiguration {
 
     private final CustomUserDetailsService customUserDetailsService;
     private final JwtUtils jwtUtils;
-
-    private static final String[] PUBLIC_URLS = {
-            "/api/v1/auth/login",
-            "/api/v1/customers",
-            "/api/v1/craftsmen"
-    };
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http){
@@ -47,7 +43,7 @@ public class SpringSecurityConfiguration {
                 //.formLogin(configurer -> configurer.loginPage("/api/v1/auth/login"))
                 .httpBasic(Customizer.withDefaults())
                 .authorizeHttpRequests(authorize -> {
-                    authorize.requestMatchers(HttpMethod.POST,PUBLIC_URLS).permitAll();
+                    authorize.requestMatchers(PUBLIC_ENDPOINTS.toArray(RequestMatcher[]::new)).permitAll();
                     authorize.anyRequest().authenticated();
                 })
                 .authenticationProvider(this.daoAuthenticationProvider())

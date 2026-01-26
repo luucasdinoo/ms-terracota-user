@@ -9,5 +9,4 @@ public class MsTerracotaUserApplication {
     public static void main(String[] args) {
         SpringApplication.run(MsTerracotaUserApplication.class, args);
     }
-
 }

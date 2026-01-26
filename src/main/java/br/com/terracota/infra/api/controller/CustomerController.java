@@ -4,13 +4,15 @@ import br.com.terracota.application.dto.input.CreateCustomerInput;
 import br.com.terracota.application.dto.input.DocumentInput;
 import br.com.terracota.application.dto.input.UserInput;
 import br.com.terracota.application.dto.output.CreateCustomerOutput;
+import br.com.terracota.application.dto.output.CustomerOutput;
 import br.com.terracota.application.usecase.CreateCustomerUseCase;
+import br.com.terracota.application.usecase.GetCustomerByIdUseCase;
 import br.com.terracota.infra.api.CustomerAPI;
 import br.com.terracota.infra.api.dto.request.CreateCustomerRequest;
 import br.com.terracota.infra.api.dto.request.DocumentRequest;
 import br.com.terracota.infra.api.dto.request.UserRequest;
-import br.com.terracota.infra.api.dto.response.CreateCraftsmanResponse;
 import br.com.terracota.infra.api.dto.response.CreateCustomerResponse;
+import br.com.terracota.infra.api.dto.response.CustomerResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,6 +24,7 @@ import java.net.URI;
 public class CustomerController implements CustomerAPI {
 
     private final CreateCustomerUseCase createCustomerUseCase;
+    private final GetCustomerByIdUseCase getCustomerByIdUseCase;
 
     @Override
     public ResponseEntity<CreateCustomerResponse> create(final CreateCustomerRequest request) {
@@ -43,5 +46,11 @@ public class CustomerController implements CustomerAPI {
         CreateCustomerOutput output = this.createCustomerUseCase.execute(createCustomerInput);
         return ResponseEntity.created(URI.create("api/v1/customers/" + output.id()))
                 .body(new CreateCustomerResponse(output.id()));
+    }
+
+    @Override
+    public ResponseEntity<CustomerResponse> getById(final String id) {
+        CustomerOutput customerOutput = this.getCustomerByIdUseCase.execute(id);
+        return ResponseEntity.ok(CustomerResponse.with(customerOutput));
     }
 }

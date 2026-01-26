@@ -27,6 +27,7 @@ public class UserPostgresAdapter implements UserGateway {
     }
 
     @Override
+    @Transactional
     public Optional<User> findById(final String id) {
         return this.repository.findById(id)
                 .map(UserEntity::toDomain);
@@ -34,9 +35,9 @@ public class UserPostgresAdapter implements UserGateway {
 
     @Override
     @Transactional
-    public Optional<User> findByUsername(String id) {
-        return this.repository.findByUsername(id)
-                .map(UserEntity::toDomain);
+    public Optional<User> findByUsername(String username) {
+        return this.repository.findByUsername(username)
+                .map(UserEntity::toDomainWithoutAddress);
     }
 
     @Override

@@ -29,7 +29,6 @@ public class CustomerPostgresAdapter implements CustomerGateway {
     public Optional<Customer> findById(final String id) {
         return this.repository.findById(id)
                 .map(CustomerEntity::toDomain);
-
     }
 
     @Override
