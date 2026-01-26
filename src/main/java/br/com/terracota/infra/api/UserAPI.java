@@ -3,6 +3,7 @@ package br.com.terracota.infra.api;
 import br.com.terracota.infra.api.dto.request.CreateUserRequest;
 import br.com.terracota.infra.api.dto.response.CreateUserResponse;
 import br.com.terracota.infra.api.dto.response.UserResponse;
+import br.com.terracota.infra.api.dto.response.UserResponseWithoutAddress;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -31,7 +32,7 @@ public interface UserAPI {
     @Operation(summary = "Get user by id", description = "Retrieves a user by their unique identifier.",
             responses = {
                     @ApiResponse(responseCode = "200", description = "Get user by id successfully",
-                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserResponse.class))),
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserResponseWithoutAddress.class))),
             }
     )
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)

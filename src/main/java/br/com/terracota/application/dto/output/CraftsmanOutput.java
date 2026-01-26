@@ -4,7 +4,7 @@ import br.com.terracota.domain.model.Craftsman;
 
 public record CraftsmanOutput(
         String id,
-        UserOutput user,
+        UserOutputWithoutAddress user,
         DocumentOutput document,
         String dateOfBirthday,
         String createdAt,
@@ -13,7 +13,7 @@ public record CraftsmanOutput(
     public static CraftsmanOutput with(final Craftsman craftsman){
         return new CraftsmanOutput(
                 craftsman.getId(),
-                UserOutput.with(craftsman.getUser().get()),
+                UserOutputWithoutAddress.with(craftsman.getUser().get()),
                 DocumentOutput.with(craftsman.getDocument().get()),
                 craftsman.getDateOfBirth().toString(),
                 craftsman.getCreatedAt().toString(),

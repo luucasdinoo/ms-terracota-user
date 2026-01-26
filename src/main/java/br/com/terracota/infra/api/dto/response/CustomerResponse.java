@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public record CustomerResponse(
         String id,
-        UserResponse user,
+        UserResponseWithoutAddress user,
         DocumentResponse document,
         @JsonProperty("date_of_birthday") String dateOfBirthday,
         String createdAt,
@@ -14,7 +14,7 @@ public record CustomerResponse(
     public static CustomerResponse with(final CustomerOutput data){
         return new CustomerResponse(
                 data.id(),
-                UserResponse.with(data.user()),
+                UserResponseWithoutAddress.with(data.user()),
                 DocumentResponse.with(data.document()),
                 data.dateOfBirthday(),
                 data.createdAt(),

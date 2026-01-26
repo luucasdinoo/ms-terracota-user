@@ -52,12 +52,4 @@ public class AuthTokenFilter extends OncePerRequestFilter {
         }
         return null;
     }
-
-    @Override
-    protected boolean shouldNotFilter(HttpServletRequest request) {
-        return (request.getServletPath().equals("/api/v1/customers") && request.getMethod().equals("POST")) ||
-                 (request.getServletPath().equals("/api/v1/craftsmen") && request.getMethod().equals("POST")) ||
-                    (request.getServletPath().equals("/api/v1/auth/login")
-        );
-    }
 }

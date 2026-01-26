@@ -21,6 +21,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import static br.com.terracota.infra.util.UrlUtils.*;
 
@@ -42,9 +43,7 @@ public class SpringSecurityConfiguration {
                 //.formLogin(configurer -> configurer.loginPage("/api/v1/auth/login"))
                 .httpBasic(Customizer.withDefaults())
                 .authorizeHttpRequests(authorize -> {
-                    authorize.requestMatchers(HttpMethod.POST, PUBLIC_URLS_POST).permitAll();
-                    authorize.requestMatchers(HttpMethod.GET,PUBLIC_URLS_GET).permitAll();
-                    authorize.requestMatchers(SWAGGER_WHITELIST).permitAll();
+                    authorize.requestMatchers(PUBLIC_ENDPOINTS.toArray(RequestMatcher[]::new)).permitAll();
                     authorize.anyRequest().authenticated();
                 })
                 .authenticationProvider(this.daoAuthenticationProvider())

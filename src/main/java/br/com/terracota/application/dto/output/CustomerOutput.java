@@ -4,7 +4,7 @@ import br.com.terracota.domain.model.Customer;
 
 public record CustomerOutput(
         String id,
-        UserOutput user,
+        UserOutputWithoutAddress user,
         DocumentOutput document,
         String dateOfBirthday,
         String createdAt,
@@ -13,7 +13,7 @@ public record CustomerOutput(
     public static CustomerOutput with(final Customer customer){
         return new CustomerOutput(
                 customer.getId(),
-                UserOutput.with(customer.getUser().get()),
+                UserOutputWithoutAddress.with(customer.getUser().get()),
                 DocumentOutput.with(customer.getDocument().get()),
                 customer.getDateOfBirth().toString(),
                 customer.getCreatedAt().toString(),

@@ -14,14 +14,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
-public class CreateUserUseCase extends UseCase<CreateUserInput, CreateUserOutput> {
+public class CreateUserByIdUseCase extends UseCase<CreateUserInput, CreateUserOutput> {
 
     private final UserGateway userGateway;
     private final RoleGateway roleGateway;
