@@ -20,7 +20,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
         User user = this.userGateway.findByUsername(username)
-                .orElseThrow(() -> new EntityNotFoundException(ExceptionType.ENTITY_NOT_FOUND, ErrorCode.ECNT03));
+                .orElseThrow(() -> new EntityNotFoundException(ExceptionType.NOT_FOUND, ErrorCode.ECNF03));
         return CustomUserDetails.build(user);
     }
 }

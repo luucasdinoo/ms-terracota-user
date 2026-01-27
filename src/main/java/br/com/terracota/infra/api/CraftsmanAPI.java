@@ -1,8 +1,11 @@
 package br.com.terracota.infra.api;
 
 import br.com.terracota.infra.api.dto.request.CreateCraftsmanRequest;
+import br.com.terracota.infra.api.dto.request.UpdateCraftsmanRequest;
+import br.com.terracota.infra.api.dto.request.UpdateCustomerRequest;
 import br.com.terracota.infra.api.dto.response.CraftsmanResponse;
 import br.com.terracota.infra.api.dto.response.CreateCraftsmanResponse;
+import br.com.terracota.infra.api.dto.response.CreateCustomerResponse;
 import br.com.terracota.infra.api.dto.response.ExceptionResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -58,4 +61,20 @@ public interface CraftsmanAPI {
     )
     @GetMapping(value = "/document/{document}", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<CraftsmanResponse> getByDocument(@PathVariable String document);
+
+    @Operation(summary = "Update craftsman", description = "update craftsman in the system.",
+            responses = {
+                    @ApiResponse(responseCode = "204", description = "Craftsman updated successfully"),
+                    @ApiResponse(responseCode = "400", description = "Invalid parameters",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))),
+                    @ApiResponse(responseCode = "409", description = "Customer already exists",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))),
+                    @ApiResponse(responseCode = "404", description = "Customer not found",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))),
+                    @ApiResponse(responseCode = "500", description = "Internal server error",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class)))
+            }
+    )
+    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<Void> update(@PathVariable String id, @RequestBody UpdateCraftsmanRequest request);
 }

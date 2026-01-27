@@ -19,7 +19,7 @@ public class GetCraftsmanByIdUseCase extends UseCase<String, CraftsmanOutput> {
     @Override
     public CraftsmanOutput execute(final String id) {
         Craftsman craftsman = this.craftsmanGateway.findById(id)
-                .orElseThrow(() -> new CraftsmanNotFoundException(ExceptionType.ENTITY_NOT_FOUND, ErrorCode.ECNT02));
+                .orElseThrow(() -> new CraftsmanNotFoundException(ExceptionType.NOT_FOUND, ErrorCode.ECNF02));
         return CraftsmanOutput.with(craftsman);
     }
 }

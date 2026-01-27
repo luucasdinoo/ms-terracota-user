@@ -19,7 +19,7 @@ public class GetCustomerByIdUseCase extends UseCase<String, CustomerOutput> {
     @Override
     public CustomerOutput execute(final String id) {
         Customer customer = this.customerGateway.findById(id)
-                .orElseThrow(() -> new CustomerNotFoundException(ExceptionType.ENTITY_NOT_FOUND, ErrorCode.ECNT01));
+                .orElseThrow(() -> new CustomerNotFoundException(ExceptionType.NOT_FOUND, ErrorCode.ECNF01));
         return CustomerOutput.with(customer);
     }
 }

@@ -85,6 +85,19 @@ public class User {
         );
     }
 
+    public User update(
+            final String username,
+            final String email,
+            final String name,
+            final String phone
+    ) {
+        this.username = username;
+        this.email = email;
+        this.name = name;
+        this.phone = phone;
+        return this;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;

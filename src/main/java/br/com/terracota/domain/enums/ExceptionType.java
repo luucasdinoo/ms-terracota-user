@@ -9,7 +9,7 @@ public enum ExceptionType {
     BAD_REQUEST("Bad Request"),
     UNPROCESSABLE_ENTITY("Unprocessable Entity"),
     INVALID_PARAMETER("Invalid Parameter"),
-    ENTITY_NOT_FOUND("Entity Not Found"),
+    NOT_FOUND("Entity Not Found"),
     BUSINESS_ERROR("Business Error"),
     AUTHENTICATION_ERROR("Authentication Error"),
     AUTHORIZATION_ERROR("Authorization Error"),

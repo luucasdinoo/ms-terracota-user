@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -58,7 +59,9 @@ public class UserEntity {
                 user.getEmail(),
                 user.getPhone(),
                 user.getActive(),
-                user.getAddresses().stream()
+                Optional.ofNullable(user.getAddresses())
+                        .orElse(List.of())
+                        .stream()
                         .map(AddressEntity::from)
                         .toList(),
                 user.getRoles().stream()

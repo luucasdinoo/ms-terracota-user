@@ -19,7 +19,7 @@ public class GetCraftsmanByDocumentUseCase extends UseCase<String, CraftsmanOutp
     @Override
     public CraftsmanOutput execute(final String document) {
         Craftsman customer = this.craftsmanGateway.findByDocumentValue(document)
-                .orElseThrow(() -> new CraftsmanNotFoundException(ExceptionType.ENTITY_NOT_FOUND, ErrorCode.ECNT02));
+                .orElseThrow(() -> new CraftsmanNotFoundException(ExceptionType.NOT_FOUND, ErrorCode.ECNF02));
         return CraftsmanOutput.with(customer);
     }
 }

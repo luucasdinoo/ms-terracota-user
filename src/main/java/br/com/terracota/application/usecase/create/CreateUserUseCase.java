@@ -5,7 +5,7 @@ import br.com.terracota.application.dto.input.CreateUserInput;
 import br.com.terracota.application.dto.output.CreateUserOutput;
 import br.com.terracota.domain.enums.ErrorCode;
 import br.com.terracota.domain.enums.ExceptionType;
-import br.com.terracota.domain.exception.EntityAlreadyExistsException;
+import br.com.terracota.domain.exception.AlreadyExistsException;
 import br.com.terracota.domain.exception.RoleNotFoundException;
 import br.com.terracota.domain.gateway.RoleGateway;
 import br.com.terracota.domain.gateway.UserGateway;
@@ -34,7 +34,7 @@ public class CreateUserUseCase extends UseCase<CreateUserInput, CreateUserOutput
 
         Set<Role> roles = input.roles().stream()
                 .map(role -> roleGateway.findByDescription(role)
-                        .orElseThrow(() -> new RoleNotFoundException(ExceptionType.ENTITY_NOT_FOUND, ErrorCode.ECNT04)))
+                        .orElseThrow(() -> new RoleNotFoundException(ExceptionType.NOT_FOUND, ErrorCode.ECNF04)))
                 .collect(Collectors.toUnmodifiableSet());
 
         var user = User.create(
@@ -55,7 +55,7 @@ public class CreateUserUseCase extends UseCase<CreateUserInput, CreateUserOutput
         Optional<User> byUsername = this.userGateway.findByUsername(input.username());
 
         if (byEmail.isPresent() || byUsername.isPresent()) {
-            throw new EntityAlreadyExistsException(ExceptionType.ALREADY_EXISTS, ErrorCode.ECAE01);
+            throw new AlreadyExistsException(ExceptionType.ALREADY_EXISTS, ErrorCode.ECAE01);
         }
     }
 }

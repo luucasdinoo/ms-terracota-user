@@ -19,7 +19,7 @@ public class GetUserByIdUseCase extends UseCase<String, UserOutput> {
     @Override
     public UserOutput execute(final String id) {
         User user = this.userGateway.findById(id)
-                .orElseThrow(() -> new UserNotFoundException(ExceptionType.ENTITY_NOT_FOUND, ErrorCode.ECNT03));
+                .orElseThrow(() -> new UserNotFoundException(ExceptionType.NOT_FOUND, ErrorCode.ECNF03));
         return UserOutput.with(user);
     }
 }

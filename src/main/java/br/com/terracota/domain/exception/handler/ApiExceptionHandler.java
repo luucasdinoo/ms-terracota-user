@@ -2,7 +2,7 @@ package br.com.terracota.domain.exception.handler;
 
 import br.com.terracota.domain.enums.ErrorCode;
 import br.com.terracota.domain.enums.ExceptionType;
-import br.com.terracota.domain.exception.EntityAlreadyExistsException;
+import br.com.terracota.domain.exception.AlreadyExistsException;
 import br.com.terracota.domain.exception.EntityNotFoundException;
 import br.com.terracota.infra.api.dto.response.ExceptionResponse;
 import org.springframework.http.HttpHeaders;
@@ -24,6 +24,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Object> handleUncaught(Exception ex, WebRequest request) {
+        ex.printStackTrace();
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
 
         var response = ExceptionResponse.build(
@@ -57,8 +58,8 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ex, response, new HttpHeaders(), status, request);
     }
 
-    @ExceptionHandler(EntityAlreadyExistsException.class)
-    public ResponseEntity<Object> handleAlreadyExistsException(EntityAlreadyExistsException ex, WebRequest request) {
+    @ExceptionHandler(AlreadyExistsException.class)
+    public ResponseEntity<Object> handleAlreadyExistsException(AlreadyExistsException ex, WebRequest request) {
         var response = ExceptionResponse.build(
                 ex.getStatus().value(),
                 ex.getExceptionType().getTitle(),
