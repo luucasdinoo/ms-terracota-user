@@ -15,7 +15,6 @@ public final class UrlUtils {
                     .matcher(HttpMethod.POST, "/api/v1/customers"),
             PathPatternRequestMatcher.withDefaults()
                     .matcher(HttpMethod.POST, "/api/v1/craftsmen"),
-
             PathPatternRequestMatcher.withDefaults()
                     .matcher(HttpMethod.GET, "/api/v1/customers/**"),
             PathPatternRequestMatcher.withDefaults()

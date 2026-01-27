@@ -6,13 +6,13 @@ import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
 @Getter
-public class EntityNotFoundException extends RuntimeException {
+public class EntityAlreadyExistsException extends RuntimeException{
 
     private ExceptionType exceptionType;
     private ErrorCode errorCode;
-    private HttpStatus status = HttpStatus.NOT_FOUND;
+    private HttpStatus status = HttpStatus.CONFLICT;
 
-    public EntityNotFoundException (final ExceptionType exceptionType, final ErrorCode errorCode) {
+    public EntityAlreadyExistsException(final ExceptionType exceptionType, final ErrorCode errorCode) {
         this.exceptionType = exceptionType;
         this.errorCode = errorCode;
     }

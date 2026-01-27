@@ -2,6 +2,7 @@ package br.com.terracota.infra.api;
 
 import br.com.terracota.infra.api.dto.request.CreateUserRequest;
 import br.com.terracota.infra.api.dto.response.CreateUserResponse;
+import br.com.terracota.infra.api.dto.response.ExceptionResponse;
 import br.com.terracota.infra.api.dto.response.UserResponse;
 import br.com.terracota.infra.api.dto.response.UserResponseWithoutAddress;
 import io.swagger.v3.oas.annotations.Operation;
@@ -23,6 +24,12 @@ public interface UserAPI {
             responses = {
                 @ApiResponse(responseCode = "201", description = "User created successfully",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = CreateUserResponse.class))),
+                @ApiResponse(responseCode = "400", description = "Invalid parameters",
+                        content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))),
+                @ApiResponse(responseCode = "409", description = "User already exists",
+                        content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))),
+                @ApiResponse(responseCode = "500", description = "Internal server error",
+                        content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class)))
             }
     )
     @PreAuthorize("hasRole('ADMIN')")
@@ -33,6 +40,10 @@ public interface UserAPI {
             responses = {
                     @ApiResponse(responseCode = "200", description = "Get user by id successfully",
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserResponseWithoutAddress.class))),
+                    @ApiResponse(responseCode = "404", description = "User not found",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))),
+                    @ApiResponse(responseCode = "500", description = "Internal server error",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class)))
             }
     )
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)

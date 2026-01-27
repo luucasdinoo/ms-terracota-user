@@ -2,7 +2,9 @@ package br.com.terracota.application.usecase.get;
 
 import br.com.terracota.application.UseCase;
 import br.com.terracota.application.dto.output.CraftsmanOutput;
-import br.com.terracota.domain.exception.EntityNotFoundException;
+import br.com.terracota.domain.enums.ErrorCode;
+import br.com.terracota.domain.enums.ExceptionType;
+import br.com.terracota.domain.exception.CraftsmanNotFoundException;
 import br.com.terracota.domain.gateway.CraftsmanGateway;
 import br.com.terracota.domain.model.Craftsman;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +19,7 @@ public class GetCraftsmanByDocumentUseCase extends UseCase<String, CraftsmanOutp
     @Override
     public CraftsmanOutput execute(final String document) {
         Craftsman customer = this.craftsmanGateway.findByDocumentValue(document)
-                .orElseThrow(() -> new EntityNotFoundException());
+                .orElseThrow(() -> new CraftsmanNotFoundException(ExceptionType.ENTITY_NOT_FOUND, ErrorCode.ECNT02));
         return CraftsmanOutput.with(customer);
     }
 }

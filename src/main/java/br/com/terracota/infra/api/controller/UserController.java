@@ -3,7 +3,7 @@ package br.com.terracota.infra.api.controller;
 import br.com.terracota.application.dto.input.CreateUserInput;
 import br.com.terracota.application.dto.output.CreateUserOutput;
 import br.com.terracota.application.dto.output.UserOutput;
-import br.com.terracota.application.usecase.create.CreateUserByIdUseCase;
+import br.com.terracota.application.usecase.create.CreateUserUseCase;
 import br.com.terracota.application.usecase.get.GetUserByIdUseCase;
 import br.com.terracota.infra.api.UserAPI;
 import br.com.terracota.infra.api.dto.request.CreateUserRequest;
@@ -19,7 +19,7 @@ import java.net.URI;
 @RequiredArgsConstructor
 public class UserController implements UserAPI {
 
-    private final CreateUserByIdUseCase createUserByIdUseCase;
+    private final CreateUserUseCase createUserUseCase;
     private final GetUserByIdUseCase getUserByIdUseCase;
 
     @Override
@@ -32,7 +32,7 @@ public class UserController implements UserAPI {
                 request.phone(),
                 request.roles()
         );
-        CreateUserOutput output = this.createUserByIdUseCase.execute(createUserInput);
+        CreateUserOutput output = this.createUserUseCase.execute(createUserInput);
         return ResponseEntity.created(URI.create("api/v1/users/" + output.id()))
                 .body(new CreateUserResponse(output.id()));
     }

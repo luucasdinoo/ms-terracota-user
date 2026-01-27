@@ -3,6 +3,7 @@ package br.com.terracota.infra.api;
 import br.com.terracota.infra.api.dto.request.CreateCustomerRequest;
 import br.com.terracota.infra.api.dto.response.CreateCustomerResponse;
 import br.com.terracota.infra.api.dto.response.CustomerResponse;
+import br.com.terracota.infra.api.dto.response.ExceptionResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -21,6 +22,12 @@ public interface CustomerAPI {
             responses = {
                 @ApiResponse(responseCode = "201", description = "Customer created successfully",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = CreateCustomerResponse.class))),
+                @ApiResponse(responseCode = "400", description = "Invalid parameters",
+                        content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))),
+                @ApiResponse(responseCode = "409", description = "Customer already exists",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))),
+                @ApiResponse(responseCode = "500", description = "Internal server error",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class)))
             }
     )
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -30,6 +37,10 @@ public interface CustomerAPI {
             responses = {
                     @ApiResponse(responseCode = "200", description = "Get customer by id successfully",
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = CustomerResponse.class))),
+                    @ApiResponse(responseCode = "404", description = "Customer not found",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))),
+                    @ApiResponse(responseCode = "500", description = "Internal server error",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class)))
             }
     )
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -39,6 +50,10 @@ public interface CustomerAPI {
             responses = {
                     @ApiResponse(responseCode = "200", description = "Get customer by id successfully",
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = CustomerResponse.class))),
+                    @ApiResponse(responseCode = "404", description = "Customer not found",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))),
+                    @ApiResponse(responseCode = "500", description = "Internal server error",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class)))
             }
     )
     @GetMapping(value = "/document/{document}", produces = MediaType.APPLICATION_JSON_VALUE)
