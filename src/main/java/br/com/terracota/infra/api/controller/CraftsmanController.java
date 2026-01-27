@@ -5,8 +5,9 @@ import br.com.terracota.application.dto.input.DocumentInput;
 import br.com.terracota.application.dto.input.UserInput;
 import br.com.terracota.application.dto.output.CraftsmanOutput;
 import br.com.terracota.application.dto.output.CreateCraftsmanOutput;
-import br.com.terracota.application.usecase.CreateCraftsmanUseCase;
-import br.com.terracota.application.usecase.GetCraftsmanByIdUseCase;
+import br.com.terracota.application.usecase.create.CreateCraftsmanUseCase;
+import br.com.terracota.application.usecase.get.GetCraftsmanByDocumentUseCase;
+import br.com.terracota.application.usecase.get.GetCraftsmanByIdUseCase;
 import br.com.terracota.infra.api.CraftsmanAPI;
 import br.com.terracota.infra.api.dto.request.CreateCraftsmanRequest;
 import br.com.terracota.infra.api.dto.request.DocumentRequest;
@@ -25,6 +26,7 @@ public class CraftsmanController implements CraftsmanAPI {
 
     private final CreateCraftsmanUseCase createCraftsmanUseCase;
     private final GetCraftsmanByIdUseCase getCraftsmanByIdUseCase;
+    private final GetCraftsmanByDocumentUseCase getCraftsmanByDocumentUseCase;
 
     @Override
     public ResponseEntity<CreateCraftsmanResponse> create(final CreateCraftsmanRequest request) {
@@ -51,6 +53,12 @@ public class CraftsmanController implements CraftsmanAPI {
     @Override
     public ResponseEntity<CraftsmanResponse> getById(final String id) {
         CraftsmanOutput craftsmanOutput = this.getCraftsmanByIdUseCase.execute(id);
+        return ResponseEntity.ok(CraftsmanResponse.with(craftsmanOutput));
+    }
+
+    @Override
+    public ResponseEntity<CraftsmanResponse> getByDocument(final String document) {
+        CraftsmanOutput craftsmanOutput = this.getCraftsmanByDocumentUseCase.execute(document);
         return ResponseEntity.ok(CraftsmanResponse.with(craftsmanOutput));
     }
 }

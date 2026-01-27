@@ -1,4 +1,4 @@
-package br.com.terracota.application.usecase;
+package br.com.terracota.application.usecase.auth;
 
 import br.com.terracota.application.UseCase;
 import br.com.terracota.application.dto.input.AuthLoginInput;

@@ -35,4 +35,12 @@ public interface CraftsmanAPI {
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<CraftsmanResponse> getById(@PathVariable String id);
 
+    @Operation(summary = "Get craftsman by document", description = "Retrieves a craftsman by document identifier.",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Get craftsman by id successfully",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = CraftsmanResponse.class))),
+            }
+    )
+    @GetMapping(value = "/document/{document}", produces = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<CraftsmanResponse> getByDocument(@PathVariable String document);
 }

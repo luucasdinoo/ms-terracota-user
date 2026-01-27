@@ -34,4 +34,13 @@ public interface CustomerAPI {
     )
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<CustomerResponse> getById(@PathVariable String id);
+
+    @Operation(summary = "Get customer by document", description = "Retrieves a customer by document identifier.",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Get customer by id successfully",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = CustomerResponse.class))),
+            }
+    )
+    @GetMapping(value = "/document/{document}", produces = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<CustomerResponse> getByDocument(@PathVariable String document);
 }

@@ -2,7 +2,7 @@ package br.com.terracota.infra.api.controller;
 
 import br.com.terracota.application.dto.input.AuthLoginInput;
 import br.com.terracota.application.dto.output.AuthLoginOutput;
-import br.com.terracota.application.usecase.AuthLoginUseCase;
+import br.com.terracota.application.usecase.auth.AuthLoginUseCase;
 import br.com.terracota.infra.api.AuthAPI;
 import br.com.terracota.infra.api.dto.request.AuthLoginRequest;
 import br.com.terracota.infra.api.dto.response.AuthLoginResponse;

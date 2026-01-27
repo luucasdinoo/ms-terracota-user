@@ -1,16 +1,16 @@
-package br.com.terracota.application.usecase;
+package br.com.terracota.application.usecase.create;
 
 import br.com.terracota.application.UseCase;
-import br.com.terracota.application.dto.input.CreateCustomerInput;
+import br.com.terracota.application.dto.input.CreateCraftsmanInput;
 import br.com.terracota.application.dto.input.DocumentInput;
 import br.com.terracota.application.dto.input.UserInput;
-import br.com.terracota.application.dto.output.CreateCustomerOutput;
+import br.com.terracota.application.dto.output.CreateCraftsmanOutput;
 import br.com.terracota.domain.enums.DocumentType;
 import br.com.terracota.domain.exception.AlreadyExistsException;
-import br.com.terracota.domain.gateway.CustomerGateway;
+import br.com.terracota.domain.gateway.CraftsmanGateway;
 import br.com.terracota.domain.gateway.RoleGateway;
 import br.com.terracota.domain.gateway.UserGateway;
-import br.com.terracota.domain.model.Customer;
+import br.com.terracota.domain.model.Craftsman;
 import br.com.terracota.domain.model.Document;
 import br.com.terracota.domain.model.Role;
 import br.com.terracota.domain.model.User;
@@ -24,18 +24,18 @@ import java.util.Set;
 
 @Component
 @RequiredArgsConstructor
-public class CreateCustomerUseCase extends UseCase<CreateCustomerInput, CreateCustomerOutput> {
+public class CreateCraftsmanUseCase extends UseCase<CreateCraftsmanInput, CreateCraftsmanOutput> {
 
-    private final CustomerGateway customerGateway;
+    private final CraftsmanGateway craftsmanGateway;
     private final UserGateway userGateway;
     private final RoleGateway roleGateway;
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public CreateCustomerOutput execute(final CreateCustomerInput input) {
+    public CreateCraftsmanOutput execute(final CreateCraftsmanInput input) {
         UserInput userInput = input.user();
         DocumentInput documentInput = input.document();
-        Optional<Role> role = this.roleGateway.findByDescription("CUSTOMER");
+        Optional<Role> role = this.roleGateway.findByDescription("CRAFTSMAN");
 
         validateUserInput(userInput, documentInput);
 
@@ -50,16 +50,16 @@ public class CreateCustomerUseCase extends UseCase<CreateCustomerInput, CreateCu
         );
         this.userGateway.create(user);
         var document = Document.create(documentInput.value(), DocumentType.valueOf(documentInput.documentType()));
-        var customer = Customer.create(user, document, input.dateOfBirth());
+        var craftsman = Craftsman.create(user, document, input.dateOfBirth());
 
-        customer = this.customerGateway.create(customer);
-        return new CreateCustomerOutput(customer.getId());
+        craftsman = this.craftsmanGateway.create(craftsman);
+        return new CreateCraftsmanOutput(craftsman.getId());
     }
 
-    private void validateUserInput(final UserInput userInput, final DocumentInput documentInput) {
-        Optional<User> byEmail = this.userGateway.findByEmail(userInput.email());
-        Optional<User> byUsername = this.userGateway.findByUsername(userInput.username());
-        Optional<Customer> byDocument = this.customerGateway.findByDocumentValue(documentInput.value());
+    private void validateUserInput(final UserInput input, final DocumentInput documentInput){
+        Optional<User> byEmail = this.userGateway.findByEmail(input.email());
+        Optional<User> byUsername = this.userGateway.findByUsername(input.username());
+        Optional<Craftsman> byDocument = this.craftsmanGateway.findByDocumentValue(documentInput.value());
 
         if (byEmail.isPresent() || byUsername.isPresent() || byDocument.isPresent()) {
             throw new AlreadyExistsException();

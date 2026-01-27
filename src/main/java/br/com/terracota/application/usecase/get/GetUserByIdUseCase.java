@@ -1,4 +1,4 @@
-package br.com.terracota.application.usecase;
+package br.com.terracota.application.usecase.get;
 
 import br.com.terracota.application.UseCase;
 import br.com.terracota.application.dto.output.UserOutput;
