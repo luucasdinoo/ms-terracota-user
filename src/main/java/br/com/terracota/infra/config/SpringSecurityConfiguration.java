@@ -32,7 +32,7 @@ public class SpringSecurityConfiguration {
 
     private final CustomUserDetailsService customUserDetailsService;
     private final JwtUtils jwtUtils;
-
+    //TODO: OAuth2 later
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http){
         return http

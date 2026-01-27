@@ -25,11 +25,6 @@ public final class UrlUtils {
             PathPatternRequestMatcher.withDefaults()
                     .matcher("/v3/api-docs/**"),
             PathPatternRequestMatcher.withDefaults()
-                    .matcher("/swagger-ui/**"),
-            //TODO: Remove after tests
-            PathPatternRequestMatcher.withDefaults()
-                    .matcher(HttpMethod.PUT, "/api/v1/customers/**"),
-            PathPatternRequestMatcher.withDefaults()
-                    .matcher(HttpMethod.PUT, "/api/v1/craftsmen/**")
+                    .matcher("/swagger-ui/**")
     );
 }

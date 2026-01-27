@@ -13,8 +13,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+//TODO: Search customers with filters and pagination
 @Tag(name = "Customers", description = "Customer management API")
 @RequestMapping("/api/v1/customers")
 public interface CustomerAPI {
@@ -73,6 +75,20 @@ public interface CustomerAPI {
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class)))
             }
     )
+    @PreAuthorize("@securityService.isCustomerAuthenticated(#id, authentication)")
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<Void> update(@PathVariable String id, @RequestBody UpdateCustomerRequest request);
+
+    @Operation(summary = "Delete customer", description = "delete customer in the system.",
+            responses = {
+                    @ApiResponse(responseCode = "204", description = "Customer updated successfully"),
+                    @ApiResponse(responseCode = "404", description = "Customer not found",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))),
+                    @ApiResponse(responseCode = "500", description = "Internal server error",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class)))
+            }
+    )
+    @PreAuthorize("@securityService.isCustomerAuthenticated(#id, authentication)")
+    @DeleteMapping(value = "/{id}")
+    ResponseEntity<Void> delete(@PathVariable String id);
 }

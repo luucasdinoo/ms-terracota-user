@@ -4,6 +4,7 @@ import br.com.terracota.application.dto.input.*;
 import br.com.terracota.application.dto.output.CraftsmanOutput;
 import br.com.terracota.application.dto.output.CreateCraftsmanOutput;
 import br.com.terracota.application.usecase.create.CreateCraftsmanUseCase;
+import br.com.terracota.application.usecase.delete.DeleteCraftsmanUseCase;
 import br.com.terracota.application.usecase.get.GetCraftsmanByDocumentUseCase;
 import br.com.terracota.application.usecase.get.GetCraftsmanByIdUseCase;
 import br.com.terracota.application.usecase.update.UpdateCraftsmanUseCase;
@@ -28,6 +29,7 @@ public class CraftsmanController implements CraftsmanAPI {
     private final GetCraftsmanByIdUseCase getCraftsmanByIdUseCase;
     private final GetCraftsmanByDocumentUseCase getCraftsmanByDocumentUseCase;
     private final UpdateCraftsmanUseCase updateCraftsmanUseCase;
+    private final DeleteCraftsmanUseCase deleteCraftsmanUseCase;
 
     @Override
     public ResponseEntity<CreateCraftsmanResponse> create(final CreateCraftsmanRequest request) {
@@ -73,6 +75,12 @@ public class CraftsmanController implements CraftsmanAPI {
                 request.phone()
         );
         this.updateCraftsmanUseCase.execute(updateCustomerInput);
+        return ResponseEntity.noContent().build();
+    }
+
+    @Override
+    public ResponseEntity<Void> delete(final String id) {
+        this.deleteCraftsmanUseCase.execute(id);
         return ResponseEntity.noContent().build();
     }
 }

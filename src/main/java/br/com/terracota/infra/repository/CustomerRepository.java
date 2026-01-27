@@ -10,4 +10,6 @@ import java.util.Optional;
 public interface CustomerRepository extends JpaRepository<CustomerEntity, String> {
 
     Optional<CustomerEntity> findByDocumentValue(String value);
+
+    boolean existsByIdAndUserId(String customerId, String userId);
 }

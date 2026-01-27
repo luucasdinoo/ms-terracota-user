@@ -15,6 +15,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "Craftsmen", description = "Craftsman management API")
@@ -75,6 +76,20 @@ public interface CraftsmanAPI {
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class)))
             }
     )
+    @PreAuthorize("@securityService.isCraftsmanAuthenticated(#id, authentication)")
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<Void> update(@PathVariable String id, @RequestBody UpdateCraftsmanRequest request);
+
+    @Operation(summary = "Delete craftsman", description = "Delete craftsman in the system.",
+            responses = {
+                    @ApiResponse(responseCode = "204", description = "Craftsman updated successfully"),
+                    @ApiResponse(responseCode = "404", description = "Craftsman not found",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))),
+                    @ApiResponse(responseCode = "500", description = "Internal server error",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class)))
+            }
+    )
+    @PreAuthorize("@securityService.isCraftsmanAuthenticated(#id, authentication)")
+    @DeleteMapping(value = "/{id}")
+    ResponseEntity<Void> delete(@PathVariable String id);
 }

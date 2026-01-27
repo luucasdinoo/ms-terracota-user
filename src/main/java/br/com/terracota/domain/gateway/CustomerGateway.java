@@ -15,4 +15,8 @@ public interface CustomerGateway {
     Optional<Customer> findByDocumentValue(String value);
 
     void deleteById(String id);
+
+    boolean existsById(String id);
+
+    boolean existsByIdAndUserId(String customerId, String userId);
 }

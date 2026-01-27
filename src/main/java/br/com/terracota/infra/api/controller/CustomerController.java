@@ -7,6 +7,7 @@ import br.com.terracota.application.dto.input.UserInput;
 import br.com.terracota.application.dto.output.CreateCustomerOutput;
 import br.com.terracota.application.dto.output.CustomerOutput;
 import br.com.terracota.application.usecase.create.CreateCustomerUseCase;
+import br.com.terracota.application.usecase.delete.DeleteCustomerUseCase;
 import br.com.terracota.application.usecase.get.GetCustomerByDocumentUseCase;
 import br.com.terracota.application.usecase.get.GetCustomerByIdUseCase;
 import br.com.terracota.application.usecase.update.UpdateCustomerUseCase;
@@ -31,6 +32,7 @@ public class CustomerController implements CustomerAPI {
     private final GetCustomerByIdUseCase getCustomerByIdUseCase;
     private final GetCustomerByDocumentUseCase getCustomerByDocumentUseCase;
     private final UpdateCustomerUseCase updateCustomerUseCase;
+    private final DeleteCustomerUseCase deleteCustomerUseCase;
 
     @Override
     public ResponseEntity<CreateCustomerResponse> create(final CreateCustomerRequest request) {
@@ -76,6 +78,12 @@ public class CustomerController implements CustomerAPI {
                 request.phone()
         );
         this.updateCustomerUseCase.execute(updateCustomerInput);
+        return ResponseEntity.noContent().build();
+    }
+
+    @Override
+    public ResponseEntity<Void> delete(final String id) {
+        this.deleteCustomerUseCase.execute(id);
         return ResponseEntity.noContent().build();
     }
 }

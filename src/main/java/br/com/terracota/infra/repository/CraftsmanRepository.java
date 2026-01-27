@@ -10,4 +10,6 @@ import java.util.Optional;
 public interface CraftsmanRepository extends JpaRepository<CraftsmanEntity, String> {
 
     Optional<CraftsmanEntity> findByDocumentValue(String value);
+
+    boolean existsByIdAndUserId(String craftsmanId, String userId);
 }
