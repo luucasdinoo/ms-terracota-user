@@ -1,8 +1,10 @@
-package br.com.terracota.application.usecase;
+package br.com.terracota.application.usecase.get;
 
 import br.com.terracota.application.UseCase;
 import br.com.terracota.application.dto.output.UserOutput;
-import br.com.terracota.domain.exception.EntityNotFoundException;
+import br.com.terracota.domain.enums.ErrorCode;
+import br.com.terracota.domain.enums.ExceptionType;
+import br.com.terracota.domain.exception.UserNotFoundException;
 import br.com.terracota.domain.gateway.UserGateway;
 import br.com.terracota.domain.model.User;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +19,7 @@ public class GetUserByIdUseCase extends UseCase<String, UserOutput> {
     @Override
     public UserOutput execute(final String id) {
         User user = this.userGateway.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException());
+                .orElseThrow(() -> new UserNotFoundException(ExceptionType.NOT_FOUND, ErrorCode.ECNF03));
         return UserOutput.with(user);
     }
 }

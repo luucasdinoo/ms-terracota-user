@@ -2,6 +2,7 @@ package br.com.terracota.infra.api;
 
 import br.com.terracota.infra.api.dto.request.AuthLoginRequest;
 import br.com.terracota.infra.api.dto.response.AuthLoginResponse;
+import br.com.terracota.infra.api.dto.response.ExceptionResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -22,6 +23,8 @@ public interface AuthAPI {
             responses = {
                     @ApiResponse(responseCode = "200", description = "User authenticated successfully",
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = AuthLoginResponse.class))),
+                    @ApiResponse(responseCode = "400", description = "Invalid parameters",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))),
             }
     )
     @PostMapping(

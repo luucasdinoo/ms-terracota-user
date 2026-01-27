@@ -39,9 +39,17 @@ public class CustomerPostgresAdapter implements CustomerGateway {
 
     @Override
     public void deleteById(final String id) {
-        if (this.repository.existsById(id)) {
-            this.repository.deleteById(id);
-        }
+        this.repository.deleteById(id);
+    }
+
+    @Override
+    public boolean existsById(final String id) {
+        return this.repository.existsById(id);
+    }
+
+    @Override
+    public boolean existsByIdAndUserId(String customerId, String userId) {
+        return this.repository.existsByIdAndUserId(customerId, userId);
     }
 
     private Customer save(final Customer customer) {

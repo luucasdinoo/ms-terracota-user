@@ -54,7 +54,18 @@ public class UserPostgresAdapter implements UserGateway {
         }
     }
 
+    @Override
+    public boolean existsByUsername(final String username) {
+        return this.repository.existsByUsername(username);
+    }
+
+    @Override
+    public boolean existsByEmail(final String email) {
+        return this.repository.existsByEmail(email);
+    }
+
     private User save(final User user) {
-        return this.repository.save(UserEntity.from(user)).toDomain();
+        return this.repository.save(UserEntity.from(user))
+                .toDomainWithoutAddress();
     }
 }

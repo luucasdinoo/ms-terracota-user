@@ -6,9 +6,9 @@ import java.util.Optional;
 
 public interface UserGateway {
 
-    User create(User customer);
+    User create(User user);
 
-    User update(User customer);
+    User update(User user);
 
     Optional<User> findById(String id);
 
@@ -17,4 +17,8 @@ public interface UserGateway {
     Optional<User> findByEmail(String id);
 
     void deleteById(String id);
+
+    boolean existsByUsername(String username);
+
+    boolean existsByEmail(String email);
 }

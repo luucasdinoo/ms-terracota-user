@@ -44,6 +44,16 @@ public class CraftsmanPostgresAdapter implements CraftsmanGateway {
         }
     }
 
+    @Override
+    public boolean existsById(String id) {
+        return this.repository.existsById(id);
+    }
+
+    @Override
+    public boolean existsByIdAndUserId(String craftsmanId, String userId) {
+        return this.repository.existsByIdAndUserId(craftsmanId, userId);
+    }
+
     private Craftsman save(final Craftsman craftsman) {
         return this.repository.save(CraftsmanEntity.from(craftsman)).toDomain();
     }

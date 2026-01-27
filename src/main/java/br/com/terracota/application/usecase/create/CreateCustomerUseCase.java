@@ -1,4 +1,4 @@
-package br.com.terracota.application.usecase;
+package br.com.terracota.application.usecase.create;
 
 import br.com.terracota.application.UseCase;
 import br.com.terracota.application.dto.input.CreateCustomerInput;
@@ -6,6 +6,8 @@ import br.com.terracota.application.dto.input.DocumentInput;
 import br.com.terracota.application.dto.input.UserInput;
 import br.com.terracota.application.dto.output.CreateCustomerOutput;
 import br.com.terracota.domain.enums.DocumentType;
+import br.com.terracota.domain.enums.ErrorCode;
+import br.com.terracota.domain.enums.ExceptionType;
 import br.com.terracota.domain.exception.AlreadyExistsException;
 import br.com.terracota.domain.gateway.CustomerGateway;
 import br.com.terracota.domain.gateway.RoleGateway;
@@ -62,7 +64,7 @@ public class CreateCustomerUseCase extends UseCase<CreateCustomerInput, CreateCu
         Optional<Customer> byDocument = this.customerGateway.findByDocumentValue(documentInput.value());
 
         if (byEmail.isPresent() || byUsername.isPresent() || byDocument.isPresent()) {
-            throw new AlreadyExistsException();
+            throw new AlreadyExistsException(ExceptionType.ALREADY_EXISTS, ErrorCode.ECAE01);
         }
     }
 }
