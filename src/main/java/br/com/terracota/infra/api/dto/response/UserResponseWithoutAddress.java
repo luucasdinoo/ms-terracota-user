@@ -6,14 +6,16 @@ public record UserResponseWithoutAddress(
         String id,
         String username,
         String email,
-        String phone
+        String phone,
+        String name
 ) {
     public static UserResponseWithoutAddress with(final UserOutputWithoutAddress data){
         return new UserResponseWithoutAddress(
                 data.id(),
                 data.username(),
                 data.email(),
-                data.phone()
+                data.phone(),
+                data.name()
         );
     }
 }

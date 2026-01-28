@@ -6,14 +6,16 @@ public record UserOutputWithoutAddress(
     String id,
     String username,
     String email,
-    String phone
+    String phone,
+    String name
 ) {
     public static UserOutputWithoutAddress with(final User user) {
         return new UserOutputWithoutAddress(
             user.getId(),
             user.getUsername(),
             user.getEmail(),
-            user.getPhone()
+            user.getPhone(),
+            user.getName()
         );
     }
 }

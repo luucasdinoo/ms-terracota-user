@@ -1,5 +1,6 @@
 package br.com.terracota.infra.api;
 
+import br.com.terracota.domain.pagination.Pagination;
 import br.com.terracota.infra.api.dto.request.CreateUserRequest;
 import br.com.terracota.infra.api.dto.response.CreateUserResponse;
 import br.com.terracota.infra.api.dto.response.ExceptionResponse;
@@ -11,10 +12,13 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.Instant;
 
 @Tag(name = "Users", description = "User management API")
 @RequestMapping("/api/v1/users")
@@ -48,4 +52,24 @@ public interface UserAPI {
     )
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<UserResponse> getById(@PathVariable String id);
+
+    @Operation(summary = "Search users", description = "Search users with pagination.",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "List users successfully",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserResponseWithoutAddress.class))),
+                    @ApiResponse(responseCode = "500", description = "Internal server error",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class)))
+            }
+    )
+    @GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<Pagination<UserResponseWithoutAddress>> search(
+            @RequestParam(required = false) final String username,
+            @RequestParam(required = false) final String email,
+            @RequestParam(required = false) final String name,
+            @RequestParam(required = false) final String document,
+            @RequestParam(required = false, defaultValue = "0") final int page,
+            @RequestParam(required = false, defaultValue = "10") final int perPage,
+            @RequestParam(required = false, defaultValue = "name") final String sort,
+            @RequestParam(required = false, defaultValue = "asc") final String dir
+    );
 }

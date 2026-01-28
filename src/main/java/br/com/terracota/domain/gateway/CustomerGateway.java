@@ -1,6 +1,8 @@
 package br.com.terracota.domain.gateway;
 
 import br.com.terracota.domain.model.Customer;
+import br.com.terracota.domain.pagination.Pagination;
+import br.com.terracota.domain.pagination.SearchFilter;
 
 import java.util.Optional;
 
@@ -19,4 +21,6 @@ public interface CustomerGateway {
     boolean existsById(String id);
 
     boolean existsByIdAndUserId(String customerId, String userId);
+
+    Pagination<Customer> search(SearchFilter filter);
 }

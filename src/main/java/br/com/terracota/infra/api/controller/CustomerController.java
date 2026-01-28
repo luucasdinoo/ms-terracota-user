@@ -10,7 +10,10 @@ import br.com.terracota.application.usecase.create.CreateCustomerUseCase;
 import br.com.terracota.application.usecase.delete.DeleteCustomerUseCase;
 import br.com.terracota.application.usecase.get.GetCustomerByDocumentUseCase;
 import br.com.terracota.application.usecase.get.GetCustomerByIdUseCase;
+import br.com.terracota.application.usecase.get.SearchCustomersUseCase;
 import br.com.terracota.application.usecase.update.UpdateCustomerUseCase;
+import br.com.terracota.domain.pagination.Pagination;
+import br.com.terracota.domain.pagination.SearchFilter;
 import br.com.terracota.infra.api.CustomerAPI;
 import br.com.terracota.infra.api.dto.request.CreateCustomerRequest;
 import br.com.terracota.infra.api.dto.request.DocumentRequest;
@@ -23,6 +26,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
+import java.time.Instant;
 
 @RestController
 @RequiredArgsConstructor
@@ -33,6 +37,7 @@ public class CustomerController implements CustomerAPI {
     private final GetCustomerByDocumentUseCase getCustomerByDocumentUseCase;
     private final UpdateCustomerUseCase updateCustomerUseCase;
     private final DeleteCustomerUseCase deleteCustomerUseCase;
+    private final SearchCustomersUseCase searchCustomersUseCase;
 
     @Override
     public ResponseEntity<CreateCustomerResponse> create(final CreateCustomerRequest request) {
@@ -85,5 +90,14 @@ public class CustomerController implements CustomerAPI {
     public ResponseEntity<Void> delete(final String id) {
         this.deleteCustomerUseCase.execute(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @Override
+    public ResponseEntity<Pagination<CustomerResponse>> search(
+            final String username, final String email, final String name, final String document,
+            final int page, final int perPage, final String sort, final String dir) {
+        var filter = SearchFilter.with(username, email, name, document, page, perPage, sort, dir);
+        Pagination<CustomerOutput> outputList = this.searchCustomersUseCase.execute(filter);
+        return ResponseEntity.ok(outputList.map(CustomerResponse::with));
     }
 }

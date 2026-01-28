@@ -3,11 +3,16 @@ package br.com.terracota.infra.api.controller;
 import br.com.terracota.application.dto.input.*;
 import br.com.terracota.application.dto.output.CraftsmanOutput;
 import br.com.terracota.application.dto.output.CreateCraftsmanOutput;
+import br.com.terracota.application.dto.output.CustomerOutput;
 import br.com.terracota.application.usecase.create.CreateCraftsmanUseCase;
 import br.com.terracota.application.usecase.delete.DeleteCraftsmanUseCase;
 import br.com.terracota.application.usecase.get.GetCraftsmanByDocumentUseCase;
 import br.com.terracota.application.usecase.get.GetCraftsmanByIdUseCase;
+import br.com.terracota.application.usecase.get.SearchCraftsmenUseCase;
+import br.com.terracota.application.usecase.get.SearchCustomersUseCase;
 import br.com.terracota.application.usecase.update.UpdateCraftsmanUseCase;
+import br.com.terracota.domain.pagination.Pagination;
+import br.com.terracota.domain.pagination.SearchFilter;
 import br.com.terracota.infra.api.CraftsmanAPI;
 import br.com.terracota.infra.api.dto.request.CreateCraftsmanRequest;
 import br.com.terracota.infra.api.dto.request.DocumentRequest;
@@ -15,6 +20,7 @@ import br.com.terracota.infra.api.dto.request.UpdateCraftsmanRequest;
 import br.com.terracota.infra.api.dto.request.UserRequest;
 import br.com.terracota.infra.api.dto.response.CraftsmanResponse;
 import br.com.terracota.infra.api.dto.response.CreateCraftsmanResponse;
+import br.com.terracota.infra.api.dto.response.CustomerResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,6 +36,7 @@ public class CraftsmanController implements CraftsmanAPI {
     private final GetCraftsmanByDocumentUseCase getCraftsmanByDocumentUseCase;
     private final UpdateCraftsmanUseCase updateCraftsmanUseCase;
     private final DeleteCraftsmanUseCase deleteCraftsmanUseCase;
+    private final SearchCraftsmenUseCase searchCraftsmenUseCase;
 
     @Override
     public ResponseEntity<CreateCraftsmanResponse> create(final CreateCraftsmanRequest request) {
@@ -82,5 +89,14 @@ public class CraftsmanController implements CraftsmanAPI {
     public ResponseEntity<Void> delete(final String id) {
         this.deleteCraftsmanUseCase.execute(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @Override
+    public ResponseEntity<Pagination<CraftsmanResponse>> search(
+            final String username, final String email, final String name, final String document,
+            final int page, final int perPage, final String sort, final String dir) {
+        var filter = SearchFilter.with(username, email, name, document, page, perPage, sort, dir);
+        Pagination<CraftsmanOutput> outputList = this.searchCraftsmenUseCase.execute(filter);
+        return ResponseEntity.ok(outputList.map(CraftsmanResponse::with));
     }
 }

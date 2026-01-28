@@ -8,6 +8,8 @@ import java.util.List;
 
 public final class UrlUtils {
 
+    private UrlUtils(){}
+
     public static final List<RequestMatcher> PUBLIC_ENDPOINTS = List.of(
             PathPatternRequestMatcher.withDefaults()
                     .matcher(HttpMethod.POST, "/api/v1/auth/login"),

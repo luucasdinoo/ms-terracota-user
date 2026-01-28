@@ -1,10 +1,12 @@
 package br.com.terracota.infra.api;
 
+import br.com.terracota.domain.pagination.Pagination;
 import br.com.terracota.infra.api.dto.request.CreateCustomerRequest;
 import br.com.terracota.infra.api.dto.request.UpdateCustomerRequest;
 import br.com.terracota.infra.api.dto.response.CreateCustomerResponse;
 import br.com.terracota.infra.api.dto.response.CustomerResponse;
 import br.com.terracota.infra.api.dto.response.ExceptionResponse;
+import br.com.terracota.infra.api.dto.response.UserResponseWithoutAddress;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -16,7 +18,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-//TODO: Search customers with filters and pagination
+import java.time.Instant;
+
 @Tag(name = "Customers", description = "Customer management API")
 @RequestMapping("/api/v1/customers")
 public interface CustomerAPI {
@@ -91,4 +94,24 @@ public interface CustomerAPI {
     @PreAuthorize("@securityService.isCustomerAuthenticated(#id, authentication)")
     @DeleteMapping(value = "/{id}")
     ResponseEntity<Void> delete(@PathVariable String id);
+
+    @Operation(summary = "Search customers", description = "Search customers with pagination.",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "List customers successfully",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserResponseWithoutAddress.class))),
+                    @ApiResponse(responseCode = "500", description = "Internal server error",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class)))
+            }
+    )
+    @GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<Pagination<CustomerResponse>> search(
+            @RequestParam(required = false) final String username,
+            @RequestParam(required = false) final String email,
+            @RequestParam(required = false) final String name,
+            @RequestParam(required = false) final String document,
+            @RequestParam(required = false, defaultValue = "0") final int page,
+            @RequestParam(required = false, defaultValue = "10") final int perPage,
+            @RequestParam(required = false, defaultValue = "name") final String sort,
+            @RequestParam(required = false, defaultValue = "asc") final String dir
+    );
 }
