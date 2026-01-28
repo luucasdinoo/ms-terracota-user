@@ -2,7 +2,6 @@ package br.com.terracota.application.usecase.update;
 
 import br.com.terracota.application.UnitUseCase;
 import br.com.terracota.application.dto.input.UpdateCraftsmanInput;
-import br.com.terracota.application.dto.input.UpdateCustomerInput;
 import br.com.terracota.domain.enums.ErrorCode;
 import br.com.terracota.domain.enums.ExceptionType;
 import br.com.terracota.domain.exception.CraftsmanNotFoundException;

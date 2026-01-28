@@ -1,9 +1,9 @@
 package br.com.terracota.infra.adapter;
 
-import br.com.terracota.domain.pagination.Pagination;
-import br.com.terracota.domain.pagination.SearchFilter;
 import br.com.terracota.domain.gateway.UserGateway;
 import br.com.terracota.domain.model.User;
+import br.com.terracota.domain.pagination.Pagination;
+import br.com.terracota.domain.pagination.SearchFilter;
 import br.com.terracota.infra.model.UserEntity;
 import br.com.terracota.infra.repository.UserRepository;
 import br.com.terracota.infra.repository.specs.UserSpecs;

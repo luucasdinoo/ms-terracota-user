@@ -5,7 +5,6 @@ import br.com.terracota.domain.model.Craftsman;
 import br.com.terracota.domain.pagination.Pagination;
 import br.com.terracota.domain.pagination.SearchFilter;
 import br.com.terracota.infra.model.CraftsmanEntity;
-import br.com.terracota.infra.model.CustomerEntity;
 import br.com.terracota.infra.repository.CraftsmanRepository;
 import br.com.terracota.infra.repository.specs.UserSpecs;
 import lombok.RequiredArgsConstructor;

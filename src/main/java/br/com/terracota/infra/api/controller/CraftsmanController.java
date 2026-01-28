@@ -1,15 +1,16 @@
 package br.com.terracota.infra.api.controller;
 
-import br.com.terracota.application.dto.input.*;
+import br.com.terracota.application.dto.input.CreateCraftsmanInput;
+import br.com.terracota.application.dto.input.DocumentInput;
+import br.com.terracota.application.dto.input.UpdateCraftsmanInput;
+import br.com.terracota.application.dto.input.UserInput;
 import br.com.terracota.application.dto.output.CraftsmanOutput;
 import br.com.terracota.application.dto.output.CreateCraftsmanOutput;
-import br.com.terracota.application.dto.output.CustomerOutput;
 import br.com.terracota.application.usecase.create.CreateCraftsmanUseCase;
 import br.com.terracota.application.usecase.delete.DeleteCraftsmanUseCase;
 import br.com.terracota.application.usecase.get.GetCraftsmanByDocumentUseCase;
 import br.com.terracota.application.usecase.get.GetCraftsmanByIdUseCase;
 import br.com.terracota.application.usecase.get.SearchCraftsmenUseCase;
-import br.com.terracota.application.usecase.get.SearchCustomersUseCase;
 import br.com.terracota.application.usecase.update.UpdateCraftsmanUseCase;
 import br.com.terracota.domain.pagination.Pagination;
 import br.com.terracota.domain.pagination.SearchFilter;
@@ -20,7 +21,6 @@ import br.com.terracota.infra.api.dto.request.UpdateCraftsmanRequest;
 import br.com.terracota.infra.api.dto.request.UserRequest;
 import br.com.terracota.infra.api.dto.response.CraftsmanResponse;
 import br.com.terracota.infra.api.dto.response.CreateCraftsmanResponse;
-import br.com.terracota.infra.api.dto.response.CustomerResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;

@@ -1,7 +1,5 @@
 package br.com.terracota.domain.pagination;
 
-import java.time.Instant;
-
 public record SearchFilter(
     String username,
     String email,

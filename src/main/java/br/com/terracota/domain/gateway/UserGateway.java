@@ -1,8 +1,8 @@
 package br.com.terracota.domain.gateway;
 
+import br.com.terracota.domain.model.User;
 import br.com.terracota.domain.pagination.Pagination;
 import br.com.terracota.domain.pagination.SearchFilter;
-import br.com.terracota.domain.model.User;
 
 import java.util.Optional;
 

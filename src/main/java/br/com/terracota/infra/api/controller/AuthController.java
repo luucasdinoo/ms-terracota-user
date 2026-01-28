@@ -20,6 +20,6 @@ public class AuthController implements AuthAPI {
     public ResponseEntity<AuthLoginResponse> login(final AuthLoginRequest request) {
         var loginInput = AuthLoginInput.with(request.username(), request.password());
         AuthLoginOutput loginOutput = this.loginUseCase.execute(loginInput);
-        return ResponseEntity.ok(new AuthLoginResponse(loginOutput.accessToken()));
+        return ResponseEntity.ok(AuthLoginResponse.with(loginOutput));
     }
 }
