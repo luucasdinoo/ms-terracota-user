@@ -44,6 +44,17 @@ public class CustomerPostgresAdapter implements CustomerGateway {
     }
 
     @Override
+    public Optional<Customer> findByUserId(String userId) {
+        return this.repository.findByUserId(userId)
+                .map(CustomerEntity::toDomain);
+    }
+
+    @Override
+    public void delete(final Customer customer) {
+        this.repository.delete(CustomerEntity.from(customer));
+    }
+
+    @Override
     public void deleteById(final String id) {
         this.repository.deleteById(id);
     }

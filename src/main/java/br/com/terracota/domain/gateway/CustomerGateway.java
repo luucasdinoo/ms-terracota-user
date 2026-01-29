@@ -16,6 +16,10 @@ public interface CustomerGateway {
 
     Optional<Customer> findByDocumentValue(String value);
 
+    Optional<Customer> findByUserId(String userId);
+
+    void delete(Customer customer);
+
     void deleteById(String id);
 
     boolean existsById(String id);

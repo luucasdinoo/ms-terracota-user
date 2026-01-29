@@ -55,9 +55,7 @@ public class UserPostgresAdapter implements UserGateway {
 
     @Override
     public void deleteById(String id) {
-        if (this.repository.existsById(id)) {
-            this.repository.deleteById(id);
-        }
+        this.repository.deleteById(id);
     }
 
     @Override
@@ -68,6 +66,11 @@ public class UserPostgresAdapter implements UserGateway {
     @Override
     public boolean existsByEmail(final String email) {
         return this.repository.existsByEmail(email);
+    }
+
+    @Override
+    public boolean existsById(String id) {
+        return this.repository.existsById(id);
     }
 
     @Override

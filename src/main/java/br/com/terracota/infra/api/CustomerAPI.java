@@ -82,7 +82,7 @@ public interface CustomerAPI {
 
     @Operation(summary = "Delete customer", description = "delete customer in the system.",
             responses = {
-                    @ApiResponse(responseCode = "204", description = "Customer updated successfully"),
+                    @ApiResponse(responseCode = "204", description = "User deleted successfully"),
                     @ApiResponse(responseCode = "404", description = "Customer not found",
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))),
                     @ApiResponse(responseCode = "500", description = "Internal server error",

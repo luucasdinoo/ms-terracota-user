@@ -12,5 +12,7 @@ public interface CraftsmanRepository extends JpaRepository<CraftsmanEntity, Stri
 
     Optional<CraftsmanEntity> findByDocumentValue(String value);
 
+    Optional<CraftsmanEntity> findByUserId(String userId);
+
     boolean existsByIdAndUserId(String craftsmanId, String userId);
 }

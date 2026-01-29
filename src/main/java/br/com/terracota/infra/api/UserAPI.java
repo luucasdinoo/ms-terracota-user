@@ -69,4 +69,17 @@ public interface UserAPI {
             @RequestParam(required = false, defaultValue = "name") final String sort,
             @RequestParam(required = false, defaultValue = "asc") final String dir
     );
+
+    @Operation(summary = "Delete user", description = "delete user in the system.",
+            responses = {
+                    @ApiResponse(responseCode = "204", description = "User deleted successfully"),
+                    @ApiResponse(responseCode = "404", description = "User not found",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))),
+                    @ApiResponse(responseCode = "500", description = "Internal server error",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class)))
+            }
+    )
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping(value = "/{id}")
+    ResponseEntity<Void> delete(@PathVariable String id);
 }

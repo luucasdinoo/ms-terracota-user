@@ -44,6 +44,17 @@ public class CraftsmanPostgresAdapter implements CraftsmanGateway {
     }
 
     @Override
+    public Optional<Craftsman> findByUserId(String userId) {
+        return this.repository.findByUserId(userId)
+                .map(CraftsmanEntity::toDomain);
+    }
+
+    @Override
+    public void delete(final Craftsman customer) {
+        this.repository.delete(CraftsmanEntity.from(customer));
+    }
+
+    @Override
     public void deleteById(final String id) {
         if (this.repository.existsById(id)) {
             this.repository.deleteById(id);

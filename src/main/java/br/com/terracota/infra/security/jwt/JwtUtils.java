@@ -1,7 +1,7 @@
 package br.com.terracota.infra.security.jwt;
 
 import br.com.terracota.application.dto.output.AuthLoginOutput;
-import br.com.terracota.infra.security.user.CustomUserDetails;
+import br.com.terracota.infra.security.user.CustomAuthentication;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -26,7 +26,7 @@ public class JwtUtils {
     private Integer jwtExpirationTime;
 
     public AuthLoginOutput generateTokenForUser(Authentication authentication){
-        CustomUserDetails principal = (CustomUserDetails) authentication.getPrincipal();
+        CustomAuthentication principal = (CustomAuthentication) authentication;
         List<String> roles = principal.getAuthorities()
                 .stream()
                 .map(GrantedAuthority::getAuthority)
@@ -36,8 +36,8 @@ public class JwtUtils {
         Instant validity = now.plusMillis(this.jwtExpirationTime);
 
         String jwt = Jwts.builder()
-                .subject(principal.getUsername())
-                .claim("id", principal.getId())
+                .subject(principal.getName())
+                .claim("id", principal.getUser().getId())
                 .claim("roles", roles)
                 .issuedAt(Date.from(now))
                 .expiration(Date.from(validity))
@@ -45,7 +45,7 @@ public class JwtUtils {
                 .compact();
 
         return new AuthLoginOutput(
-                principal.getUsername(),
+                principal.getName(),
                 Boolean.TRUE,
                 now,
                 validity,

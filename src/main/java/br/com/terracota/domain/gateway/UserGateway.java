@@ -24,5 +24,7 @@ public interface UserGateway {
 
     boolean existsByEmail(String email);
 
+    boolean existsById(String id);
+
     Pagination<User> search(SearchFilter filter);
 }

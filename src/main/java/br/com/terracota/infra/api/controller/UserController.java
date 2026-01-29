@@ -5,6 +5,7 @@ import br.com.terracota.application.dto.output.CreateUserOutput;
 import br.com.terracota.application.dto.output.UserOutput;
 import br.com.terracota.application.dto.output.UserOutputWithoutAddress;
 import br.com.terracota.application.usecase.create.CreateUserUseCase;
+import br.com.terracota.application.usecase.delete.DeleteUserUseCase;
 import br.com.terracota.application.usecase.get.GetUserByIdUseCase;
 import br.com.terracota.application.usecase.get.SearchUsersUseCase;
 import br.com.terracota.domain.pagination.Pagination;
@@ -27,6 +28,7 @@ public class UserController implements UserAPI {
     private final CreateUserUseCase createUserUseCase;
     private final GetUserByIdUseCase getUserByIdUseCase;
     private final SearchUsersUseCase searchUsersUseCase;
+    private final DeleteUserUseCase deleteUserUseCase;
 
     @Override
     public ResponseEntity<CreateUserResponse> create(final CreateUserRequest request) {
@@ -57,5 +59,11 @@ public class UserController implements UserAPI {
         var filter = SearchFilter.with(username, email, name, document, page, perPage, sort, dir);
         Pagination<UserOutputWithoutAddress> outputList = this.searchUsersUseCase.execute(filter);
         return ResponseEntity.ok(outputList.map(UserResponseWithoutAddress::with));
+    }
+
+    @Override
+    public ResponseEntity<Void> delete(final String id) {
+        this.deleteUserUseCase.execute(id);
+        return ResponseEntity.noContent().build();
     }
 }

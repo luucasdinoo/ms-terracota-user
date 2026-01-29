@@ -12,5 +12,7 @@ public interface CustomerRepository extends JpaRepository<CustomerEntity, String
 
     Optional<CustomerEntity> findByDocumentValue(String value);
 
+    Optional<CustomerEntity> findByUserId(String userId);
+
     boolean existsByIdAndUserId(String customerId, String userId);
 }
