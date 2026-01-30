@@ -50,7 +50,7 @@ public class UserPostgresAdapter implements UserGateway {
     @Transactional
     public Optional<User> findByEmail(String id) {
         return this.repository.findByEmail(id)
-                .map(UserEntity::toDomain);
+                .map(UserEntity::toDomainWithoutAddress);
     }
 
     @Override

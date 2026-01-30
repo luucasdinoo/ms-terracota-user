@@ -1,8 +1,5 @@
 package br.com.terracota.infra.security.user;
 
-import br.com.terracota.domain.enums.ErrorCode;
-import br.com.terracota.domain.enums.ExceptionType;
-import br.com.terracota.domain.exception.EntityNotFoundException;
 import br.com.terracota.domain.gateway.UserGateway;
 import br.com.terracota.domain.model.User;
 import lombok.RequiredArgsConstructor;
