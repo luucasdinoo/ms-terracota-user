@@ -8,6 +8,7 @@ public record CreateUserInput(
         String name,
         String email,
         String phone,
+        String userType,
         List<String> roles
 ) {
     public static CreateUserInput with(
@@ -16,8 +17,9 @@ public record CreateUserInput(
             final String name,
             final String email,
             final String phone,
+            String userType,
             final List<String> roles
     ) {
-        return new CreateUserInput(username, password, name, email, phone, roles);
+        return new CreateUserInput(username, password, name, email, phone, userType, roles);
     }
 }

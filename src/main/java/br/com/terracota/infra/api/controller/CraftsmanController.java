@@ -52,7 +52,7 @@ public class CraftsmanController implements CraftsmanAPI {
         );
         var documentInput = DocumentInput.with(documentRequest.value(), documentRequest.documentType());
         var createCraftsmanInput = CreateCraftsmanInput.with(
-                userInput, documentInput, request.dateOfBirthday()
+                userInput, documentInput, request.dateOfBirthday(), userRequest.userType()
         );
 
         CreateCraftsmanOutput output = this.createCraftsmanUseCase.execute(createCraftsmanInput);

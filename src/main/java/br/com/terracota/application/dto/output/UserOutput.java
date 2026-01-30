@@ -9,6 +9,7 @@ public record UserOutput(
         String username,
         String email,
         String phone,
+        String userType,
         List<AddressOutput> addressOutput
 ) {
     public static UserOutput with(final User user) {
@@ -17,6 +18,7 @@ public record UserOutput(
             user.getUsername(),
             user.getEmail(),
             user.getPhone(),
+            user.getUserType().getDescription(),
             user.getAddresses().stream()
                 .map(AddressOutput::with)
                 .toList()

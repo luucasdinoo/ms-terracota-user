@@ -5,9 +5,10 @@ import java.util.Date;
 public record CreateCraftsmanInput(
     UserInput user,
     DocumentInput document,
-    Date dateOfBirth
+    Date dateOfBirth,
+    String userType
 ) {
-    public static CreateCraftsmanInput with(UserInput userInput, DocumentInput documentInput, Date dateOfBirth){
-        return new CreateCraftsmanInput(userInput, documentInput, dateOfBirth);
+    public static CreateCraftsmanInput with(UserInput userInput, DocumentInput documentInput, Date dateOfBirth, String userType){
+        return new CreateCraftsmanInput(userInput, documentInput, dateOfBirth, userType);
     }
 }

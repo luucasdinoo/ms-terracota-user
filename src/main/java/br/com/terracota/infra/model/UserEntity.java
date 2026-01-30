@@ -1,5 +1,6 @@
 package br.com.terracota.infra.model;
 
+import br.com.terracota.domain.enums.TypeUser;
 import br.com.terracota.domain.model.User;
 import jakarta.persistence.*;
 import lombok.*;
@@ -39,6 +40,9 @@ public class UserEntity {
     @Column(name = "ACTIVE")
     private Boolean active;
 
+    @Enumerated(EnumType.STRING)
+    private TypeUser userType;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<AddressEntity> addresses;
 
@@ -59,6 +63,7 @@ public class UserEntity {
                 user.getEmail(),
                 user.getPhone(),
                 user.getActive(),
+                user.getUserType(),
                 Optional.ofNullable(user.getAddresses())
                         .orElse(List.of())
                         .stream()
@@ -79,6 +84,7 @@ public class UserEntity {
                 getEmail(),
                 getPhone(),
                 getActive(),
+                getUserType(),
                 getAddresses().stream()
                         .map(AddressEntity::toDomain)
                         .collect(Collectors.toList()),
@@ -97,6 +103,7 @@ public class UserEntity {
                 getEmail(),
                 getPhone(),
                 getActive(),
+                getUserType(),
                 getRoles().stream()
                         .map(RoleEntity::toDomain)
                         .collect(Collectors.toSet())

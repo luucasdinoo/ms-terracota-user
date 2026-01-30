@@ -38,6 +38,7 @@ public class UserController implements UserAPI {
                 request.name(),
                 request.email(),
                 request.phone(),
+                request.userType(),
                 request.roles()
         );
         CreateUserOutput output = this.createUserUseCase.execute(createUserInput);

@@ -7,7 +7,8 @@ public record UserOutputWithoutAddress(
     String username,
     String email,
     String phone,
-    String name
+    String name,
+    String userType
 ) {
     public static UserOutputWithoutAddress with(final User user) {
         return new UserOutputWithoutAddress(
@@ -15,7 +16,8 @@ public record UserOutputWithoutAddress(
             user.getUsername(),
             user.getEmail(),
             user.getPhone(),
-            user.getName()
+            user.getName(),
+            user.getUserType().getDescription()
         );
     }
 }

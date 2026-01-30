@@ -52,7 +52,7 @@ public class CustomerController implements CustomerAPI {
         );
         var documentInput = DocumentInput.with(documentRequest.value(), documentRequest.documentType());
         var createCustomerInput = CreateCustomerInput.with(
-                userInput, documentInput, request.dateOfBirthday()
+                userInput, documentInput, request.dateOfBirthday(), userRequest.userType()
         );
 
         CreateCustomerOutput output = this.createCustomerUseCase.execute(createCustomerInput);
