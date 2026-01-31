@@ -19,7 +19,7 @@ public record UserResponseWithoutAddress(
                 data.email(),
                 data.phone(),
                 data.name(),
-                data.userType()
+                data.userType().toUpperCase()
         );
     }
 }

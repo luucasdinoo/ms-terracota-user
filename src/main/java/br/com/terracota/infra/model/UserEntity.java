@@ -19,28 +19,29 @@ import java.util.stream.Collectors;
 public class UserEntity {
 
     @Id
-    @Column(name = "USER_ID")
+    @Column(name = "USER_ID", nullable = false, length = 32)
     private String id;
 
-    @Column(name = "USERNAME")
+    @Column(name = "USERNAME", nullable = false, length = 50, unique = true)
     private String username;
 
-    @Column(name = "PASSWORD")
+    @Column(name = "PASSWORD", nullable = false, length = 254)
     private String password;
 
-    @Column(name = "NAME")
+    @Column(name = "NAME", nullable = false, length = 254, unique = true)
     private String name;
 
-    @Column(name = "EMAIL")
+    @Column(name = "EMAIL", nullable = false, length = 150)
     private String email;
 
-    @Column(name = "PHONE")
+    @Column(name = "PHONE", length = 11)
     private String phone;
 
-    @Column(name = "ACTIVE")
+    @Column(name = "ACTIVE", nullable = false, columnDefinition = "BOOLEAN DEFAULT TRUE")
     private Boolean active;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "USER_TYPE", nullable = false, length = 15)
     private TypeUser userType;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

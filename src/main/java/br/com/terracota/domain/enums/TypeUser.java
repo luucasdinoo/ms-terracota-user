@@ -8,7 +8,7 @@ public enum TypeUser {
     CUSTOMER("Customer"),
     CRAFTSMAN("Craftsman"),
     ENTERPRISE("Enterprise"),
-    ADMINISTRATOR("Administrator"),
+    ADMIN("Admin"),
     USER("User");
 
     private String description;

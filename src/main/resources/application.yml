@@ -5,13 +5,14 @@ spring:
     name: ms-terracota-user
   jpa:
     open-in-view: false
-  security:
-    oauth2:
-      client:
-        registration:
-          google:
-            client-id: ${OAUTH2_CLIENT_ID}
-            client-secret: ${OAUTH2_CLIENT_SECRET}
+  flyway:
+    enabled: true
+    url: ${TRC_DB_URL}
+    user: ${TRC_DB_USERNAME}
+    password: ${TRC_DB_PASSWORD}
+    locations:
+      - classpath:db/migration
+
 server:
   port: 8080
   servlet:

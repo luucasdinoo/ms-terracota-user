@@ -17,13 +17,13 @@ public class SecurityService {
     private final CraftsmanGateway craftsmanGateway;
 
     public boolean isCustomerAuthenticated(String customerId, Authentication authentication){
-        var user = (User) authentication;
+        var user = (User) authentication.getPrincipal();
         String authenticatedUserId = user.getId();
         return this.customerGateway.existsByIdAndUserId(customerId, authenticatedUserId);
     }
 
     public boolean isCraftsmanAuthenticated(String craftsmanId, Authentication authentication){
-        var user = (User) authentication;
+        var user = (User) authentication.getPrincipal();
         String authenticatedUserId = user.getId();
         return this.craftsmanGateway.existsByIdAndUserId(craftsmanId, authenticatedUserId);
     }

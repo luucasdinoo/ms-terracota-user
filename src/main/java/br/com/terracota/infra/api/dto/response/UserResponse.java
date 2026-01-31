@@ -19,7 +19,7 @@ public record UserResponse(
                 data.username(),
                 data.email(),
                 data.phone(),
-                data.userType(),
+                data.userType().toUpperCase(),
                 data.addressOutput().stream()
                         .map(AddressResponse::with)
                         .toList()

@@ -58,6 +58,7 @@ public interface UserAPI {
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class)))
             }
     )
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<Pagination<UserResponseWithoutAddress>> search(
             @RequestParam(required = false) final String username,

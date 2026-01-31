@@ -16,28 +16,28 @@ import java.util.Objects;
 public class AddressEntity {
 
     @Id
-    @Column(name = "ADDRESS_ID")
+    @Column(name = "ADDRESS_ID", nullable = false, length = 32)
     private String id;
 
-    @Column(name = "ADDRESS_NAME")
+    @Column(name = "ADDRESS_NAME", nullable = false, length = 100)
     private String name;
 
-    @Column(name = "STREET")
+    @Column(name = "STREET", nullable = false, length = 90)
     private String street;
 
-    @Column(name = "NUMBER")
+    @Column(name = "NUMBER", nullable = false, length = 10)
     private String number;
 
-    @Column(name = "NEIGHBORHOOD")
+    @Column(name = "NEIGHBORHOOD", nullable = false, length = 60)
     private String neighborhood;
 
-    @Column(name = "CITY")
+    @Column(name = "CITY", nullable = false, length = 60)
     private String city;
 
-    @Column(name = "COUNTRY")
+    @Column(name = "COUNTRY", nullable = false, length = 90)
     private String country;
 
-    @Column(name = "ZIP")
+    @Column(name = "ZIP", nullable = false, length = 8)
     private String zip;
 
     @ManyToOne(targetEntity = UserEntity.class)
@@ -45,6 +45,7 @@ public class AddressEntity {
     private UserEntity user;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "ADDRESS_TYPE", nullable = false, length = 15)
     private AddressType addressType;
 
     public static AddressEntity from(final Address address){

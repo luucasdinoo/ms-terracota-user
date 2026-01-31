@@ -16,13 +16,14 @@ import java.util.Objects;
 public class DocumentEntity {
 
     @Id
-    @Column(name = "DOCUMENT_ID")
+    @Column(name = "DOCUMENT_ID", nullable = false, length = 32)
     private String id;
 
-    @Column(name = "VALUE")
+    @Column(name = "VALUE", nullable = false, length = 15)
     private String value;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "DOCUMENT_TYPE", nullable = false, length = 10)
     private DocumentType documentType;
 
     public static DocumentEntity from(final Document document){

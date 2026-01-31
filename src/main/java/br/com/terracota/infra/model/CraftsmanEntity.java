@@ -17,21 +17,21 @@ import java.util.Objects;
 public class CraftsmanEntity {
 
     @Id
-    @Column(name = "CRAFTSMAN_ID")
+    @Column(name = "CRAFTSMAN_ID", nullable = false, length = 32)
     private String id;
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "USER_ID")
+    @JoinColumn(name = "USER_ID", nullable = false, unique = true)
     private UserEntity user;
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "DOCUMENT_ID")
+    @JoinColumn(name = "DOCUMENT_ID", nullable = false, unique = true)
     private DocumentEntity document;
 
-    @Column(name = "DATE_OF_BIRTH")
+    @Column(name = "DATE_OF_BIRTH", nullable = false)
     private Date dateOfBirth;
 
-    @Column(name = "CREATED_AT")
+    @Column(name = "CREATED_AT", nullable = false)
     private Instant createdAt;
 
     @Column(name = "UPDATED_AT")
