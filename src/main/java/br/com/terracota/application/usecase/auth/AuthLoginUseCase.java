@@ -24,7 +24,6 @@ public class AuthLoginUseCase extends UseCase<AuthLoginInput, AuthLoginOutput> {
                 new UsernamePasswordAuthenticationToken(input.username(), input.password())
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = this.jwtUtils.generateTokenForUser(authentication);
-        return new AuthLoginOutput(jwt);
+        return this.jwtUtils.generateTokenForUser(authentication);
     }
 }

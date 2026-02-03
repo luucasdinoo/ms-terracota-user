@@ -8,6 +8,7 @@ import br.com.terracota.application.dto.output.CreateCraftsmanOutput;
 import br.com.terracota.domain.enums.DocumentType;
 import br.com.terracota.domain.enums.ErrorCode;
 import br.com.terracota.domain.enums.ExceptionType;
+import br.com.terracota.domain.enums.TypeUser;
 import br.com.terracota.domain.exception.AlreadyExistsException;
 import br.com.terracota.domain.gateway.CraftsmanGateway;
 import br.com.terracota.domain.gateway.RoleGateway;
@@ -47,6 +48,7 @@ public class CreateCraftsmanUseCase extends UseCase<CreateCraftsmanInput, Create
                 userInput.name(),
                 userInput.email(),
                 userInput.phone(),
+                TypeUser.valueOf(input.userType()),
                 new ArrayList<>(),
                 Set.of(role.get())
         );

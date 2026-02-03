@@ -1,6 +1,7 @@
 package br.com.terracota.infra.security.jwt;
 
-import br.com.terracota.infra.security.user.CustomUserDetails;
+import br.com.terracota.application.dto.output.AuthLoginOutput;
+import br.com.terracota.infra.security.user.CustomAuthentication;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -11,6 +12,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
+import java.time.Instant;
 import java.util.Date;
 import java.util.List;
 
@@ -23,21 +25,32 @@ public class JwtUtils {
     @Value("${trc.auth.jwt.expiration-time}")
     private Integer jwtExpirationTime;
 
-    public String generateTokenForUser(Authentication authentication){
-        CustomUserDetails principal = (CustomUserDetails) authentication.getPrincipal();
+    public AuthLoginOutput generateTokenForUser(Authentication authentication){
+        CustomAuthentication principal = (CustomAuthentication) authentication;
         List<String> roles = principal.getAuthorities()
                 .stream()
                 .map(GrantedAuthority::getAuthority)
                 .toList();
 
-        return Jwts.builder()
-                .subject(principal.getUsername())
-                .claim("id", principal.getId())
+        Instant now = Instant.now();
+        Instant validity = now.plusMillis(this.jwtExpirationTime);
+
+        String jwt = Jwts.builder()
+                .subject(principal.getName())
+                .claim("id", principal.getUser().getId())
                 .claim("roles", roles)
-                .issuedAt(new Date())
-                .expiration(new Date((new Date()).getTime() + this.jwtExpirationTime))
+                .issuedAt(Date.from(now))
+                .expiration(Date.from(validity))
                 .signWith(key())
                 .compact();
+
+        return new AuthLoginOutput(
+                principal.getName(),
+                Boolean.TRUE,
+                now,
+                validity,
+                jwt
+        );
     }
 
     public String getUsernameFromToken(final String token){

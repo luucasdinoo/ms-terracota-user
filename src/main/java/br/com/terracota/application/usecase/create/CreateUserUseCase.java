@@ -5,6 +5,7 @@ import br.com.terracota.application.dto.input.CreateUserInput;
 import br.com.terracota.application.dto.output.CreateUserOutput;
 import br.com.terracota.domain.enums.ErrorCode;
 import br.com.terracota.domain.enums.ExceptionType;
+import br.com.terracota.domain.enums.TypeUser;
 import br.com.terracota.domain.exception.AlreadyExistsException;
 import br.com.terracota.domain.exception.RoleNotFoundException;
 import br.com.terracota.domain.gateway.RoleGateway;
@@ -43,6 +44,7 @@ public class CreateUserUseCase extends UseCase<CreateUserInput, CreateUserOutput
                 input.name(),
                 input.email(),
                 input.phone(),
+                TypeUser.valueOf(input.userType()),
                 new ArrayList<>(),
                 roles
         );

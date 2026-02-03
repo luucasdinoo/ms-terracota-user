@@ -1,5 +1,6 @@
 package br.com.terracota.domain.model;
 
+import br.com.terracota.domain.enums.TypeUser;
 import br.com.terracota.domain.utils.IdUtils;
 import lombok.*;
 
@@ -24,6 +25,8 @@ public class User {
 
     private Boolean active;
 
+    private TypeUser userType;
+
     private List<Address> addresses;
 
     private Set<Role> roles;
@@ -38,10 +41,11 @@ public class User {
             final String name,
             final String email,
             final String phone,
+            final TypeUser userType,
             final List<Address> addresses,
             final Set<Role> roles
     ) {
-        return new User(IdUtils.uuid(), username, password, name, email, phone, Boolean.TRUE, addresses, roles);
+        return new User(IdUtils.uuid(), username, password, name, email, phone, Boolean.TRUE, userType, addresses, roles);
     }
 
     public static User with(
@@ -52,10 +56,11 @@ public class User {
             final String email,
             final String phone,
             final Boolean active,
+            final TypeUser userType,
             final List<Address> addresses,
             final Set<Role> roles
     ) {
-        return new User(id, username, password, name, email, phone, active, addresses, roles);
+        return new User(id, username, password, name, email, phone, active, userType, addresses, roles);
     }
 
     public static User with(
@@ -66,9 +71,10 @@ public class User {
             final String email,
             final String phone,
             final Boolean active,
+            final TypeUser userType,
             final Set<Role> roles
     ) {
-        return new User(id, username, password, name, email, phone, active, null, roles);
+        return new User(id, username, password, name, email, phone, active,userType, null, roles);
     }
 
     public static User with(final User user) {
@@ -80,6 +86,7 @@ public class User {
                 user.getEmail(),
                 user.getPhone(),
                 user.getActive(),
+                user.getUserType(),
                 new ArrayList<>(user.getAddresses()),
                 new HashSet<>(user.getRoles())
         );

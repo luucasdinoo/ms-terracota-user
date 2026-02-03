@@ -1,0 +1,8 @@
+docker run -d \
+  --name terracota_user_db \
+  --restart always \
+  -p 5432:5432 \
+  -e POSTGRES_USER=docker \
+  -e POSTGRES_PASSWORD=docker \
+  -e POSTGRES_DB=terracota_user_db \
+  postgres:16-alpine

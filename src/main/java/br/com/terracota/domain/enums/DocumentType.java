@@ -4,7 +4,7 @@ import lombok.Getter;
 
 @Getter
 public enum DocumentType {
-    CPF("cpf"),
+    CPF("document"),
     CNPJ("cnpj");
 
     private String description;

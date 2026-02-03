@@ -1,11 +1,10 @@
 package br.com.terracota.infra.api;
 
+import br.com.terracota.domain.pagination.Pagination;
 import br.com.terracota.infra.api.dto.request.CreateCraftsmanRequest;
 import br.com.terracota.infra.api.dto.request.UpdateCraftsmanRequest;
-import br.com.terracota.infra.api.dto.request.UpdateCustomerRequest;
 import br.com.terracota.infra.api.dto.response.CraftsmanResponse;
 import br.com.terracota.infra.api.dto.response.CreateCraftsmanResponse;
-import br.com.terracota.infra.api.dto.response.CreateCustomerResponse;
 import br.com.terracota.infra.api.dto.response.ExceptionResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -92,4 +91,24 @@ public interface CraftsmanAPI {
     @PreAuthorize("@securityService.isCraftsmanAuthenticated(#id, authentication)")
     @DeleteMapping(value = "/{id}")
     ResponseEntity<Void> delete(@PathVariable String id);
+
+    @Operation(summary = "Search craftsmen", description = "Search craftsmen with pagination.",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "List craftsmen successfully",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = Pagination.class))),
+                    @ApiResponse(responseCode = "500", description = "Internal server error",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class)))
+            }
+    )
+    @GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<Pagination<CraftsmanResponse>> search(
+            @RequestParam(required = false) final String username,
+            @RequestParam(required = false) final String email,
+            @RequestParam(required = false) final String name,
+            @RequestParam(required = false) final String document,
+            @RequestParam(required = false, defaultValue = "0") final int page,
+            @RequestParam(required = false, defaultValue = "10") final int perPage,
+            @RequestParam(required = false, defaultValue = "name") final String sort,
+            @RequestParam(required = false, defaultValue = "asc") final String dir
+    );
 }

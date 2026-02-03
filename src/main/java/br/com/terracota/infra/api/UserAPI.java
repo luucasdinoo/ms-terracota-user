@@ -1,5 +1,6 @@
 package br.com.terracota.infra.api;
 
+import br.com.terracota.domain.pagination.Pagination;
 import br.com.terracota.infra.api.dto.request.CreateUserRequest;
 import br.com.terracota.infra.api.dto.response.CreateUserResponse;
 import br.com.terracota.infra.api.dto.response.ExceptionResponse;
@@ -48,4 +49,38 @@ public interface UserAPI {
     )
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<UserResponse> getById(@PathVariable String id);
+
+    @Operation(summary = "Search users", description = "Search users with pagination.",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "List users successfully",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserResponseWithoutAddress.class))),
+                    @ApiResponse(responseCode = "500", description = "Internal server error",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class)))
+            }
+    )
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<Pagination<UserResponseWithoutAddress>> search(
+            @RequestParam(required = false) final String username,
+            @RequestParam(required = false) final String email,
+            @RequestParam(required = false) final String name,
+            @RequestParam(required = false) final String document,
+            @RequestParam(required = false, defaultValue = "0") final int page,
+            @RequestParam(required = false, defaultValue = "10") final int perPage,
+            @RequestParam(required = false, defaultValue = "name") final String sort,
+            @RequestParam(required = false, defaultValue = "asc") final String dir
+    );
+
+    @Operation(summary = "Delete user", description = "delete user in the system.",
+            responses = {
+                    @ApiResponse(responseCode = "204", description = "User deleted successfully"),
+                    @ApiResponse(responseCode = "404", description = "User not found",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))),
+                    @ApiResponse(responseCode = "500", description = "Internal server error",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class)))
+            }
+    )
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping(value = "/{id}")
+    ResponseEntity<Void> delete(@PathVariable String id);
 }
