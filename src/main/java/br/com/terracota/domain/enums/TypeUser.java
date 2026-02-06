@@ -1,8 +1,5 @@
 package br.com.terracota.domain.enums;
 
-import lombok.Getter;
-
-@Getter
 public enum TypeUser {
 
     CUSTOMER("Customer"),
@@ -15,5 +12,8 @@ public enum TypeUser {
 
     TypeUser(final String description) {
         this.description = description;
+    }
+    public String getDescription() {
+        return this.description.toUpperCase();
     }
 }

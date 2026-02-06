@@ -1,7 +1,6 @@
 package br.com.terracota.domain.gateway;
 
 import br.com.terracota.domain.model.Craftsman;
-import br.com.terracota.domain.model.Customer;
 import br.com.terracota.domain.pagination.Pagination;
 import br.com.terracota.domain.pagination.SearchFilter;
 
