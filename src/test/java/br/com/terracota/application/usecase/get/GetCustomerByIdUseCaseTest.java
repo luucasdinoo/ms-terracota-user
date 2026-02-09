@@ -14,7 +14,8 @@ import org.springframework.http.HttpStatus;
 
 import java.util.Optional;
 
-import static br.com.terracota.mock.TestMocks.*;
+import static br.com.terracota.mock.UseCaseTestMocks.CUSTOMER_ID;
+import static br.com.terracota.mock.UseCaseTestMocks.CUSTOMER_TEST;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.anyString;

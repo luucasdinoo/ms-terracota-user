@@ -11,8 +11,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static br.com.terracota.mock.TestMocks.SEARCH_CRAFTSMAN_PAGINATION;
-import static br.com.terracota.mock.TestMocks.SEARCH_FILTER_TEST;
+import static br.com.terracota.mock.UseCaseTestMocks.SEARCH_CRAFTSMAN_PAGINATION;
+import static br.com.terracota.mock.UseCaseTestMocks.SEARCH_FILTER_TEST;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;

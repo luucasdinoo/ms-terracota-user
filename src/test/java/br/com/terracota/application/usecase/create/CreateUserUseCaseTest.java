@@ -18,8 +18,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
 
-import static br.com.terracota.mock.TestMocks.CREATE_USER_INPUT;
-import static br.com.terracota.mock.TestMocks.USER_TEST;
+import static br.com.terracota.mock.UseCaseTestMocks.CREATE_USER_INPUT;
+import static br.com.terracota.mock.UseCaseTestMocks.USER_TEST;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;

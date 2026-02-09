@@ -74,7 +74,7 @@ public class User {
             final TypeUser userType,
             final Set<Role> roles
     ) {
-        return new User(id, username, password, name, email, phone, active,userType, null, roles);
+        return new User(id, username, password, name, email, phone, active,userType, new ArrayList<>(), roles);
     }
 
     public static User with(final User user) {

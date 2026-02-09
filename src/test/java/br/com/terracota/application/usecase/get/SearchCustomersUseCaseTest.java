@@ -1,10 +1,7 @@
 package br.com.terracota.application.usecase.get;
 
 import br.com.terracota.application.dto.output.CustomerOutput;
-import br.com.terracota.application.dto.output.UserOutputWithoutAddress;
 import br.com.terracota.domain.gateway.CustomerGateway;
-import br.com.terracota.domain.gateway.UserGateway;
-import br.com.terracota.domain.model.Customer;
 import br.com.terracota.domain.pagination.Pagination;
 import br.com.terracota.domain.pagination.SearchFilter;
 import org.junit.jupiter.api.DisplayName;
@@ -14,7 +11,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static br.com.terracota.mock.TestMocks.*;
+import static br.com.terracota.mock.UseCaseTestMocks.SEARCH_CUSTOMER_PAGINATION;
+import static br.com.terracota.mock.UseCaseTestMocks.SEARCH_FILTER_TEST;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
